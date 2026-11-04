@@ -56,9 +56,13 @@ Die App ist vollständig in Swift geschrieben und bringt eine **eigene DICOM-Imp
 
 ## Installation
 
-1. Unter [**Releases**](../../releases/latest) die Datei **`DICOM-Test-Tool.zip`** herunterladen.
-2. Die ZIP-Datei per Doppelklick entpacken und **DICOM Test Tool** in den Ordner **Programme** ziehen.
-3. Die App öffnen.
+1. Unter [**Releases**](../../releases/latest) die Datei **`DICOM-Test-Tool.dmg`** herunterladen.
+2. Die DMG-Datei per Doppelklick öffnen.
+3. Im Fenster das Symbol **DICOM Test Tool** auf den Ordner **Programme** ziehen.
+4. Das Fenster schließen und im Finder links neben „DICOM Test Tool 1.x“ auf ⏏ klicken (auswerfen).
+5. Die App aus dem Programme-Ordner oder über Spotlight (`⌘ Leertaste`, „DICOM“) starten.
+
+Die Datei `DICOM-Test-Tool.zip` im Release wird von der eingebauten Update-Funktion verwendet und muss nicht heruntergeladen werden.
 
 > [!IMPORTANT]
 > **Beim ersten Start** blockiert macOS die App, weil sie nicht über den kostenpflichtigen Apple-Notarisierungsdienst beglaubigt ist.
@@ -109,7 +113,8 @@ Voraussetzung: Xcode 15 oder neuer (bzw. die Command Line Tools mit Swift 5.9+).
 ./build-app.sh
 ```
 
-Ergebnis in `dist/`: `DICOM Test Tool.app`, `DICOM-Test-Tool.zip` samt `.sha256` und das Kommandozeilen-Werkzeug `dicomcli`.
+Ergebnis in `dist/`: `DICOM Test Tool.app`, `DICOM-Test-Tool.dmg` (Installation per Drag & Drop), `DICOM-Test-Tool.zip` samt `.sha256` (für die Update-Funktion) und das Kommandozeilen-Werkzeug `dicomcli`.
+Beim ersten Bauen fragt macOS eventuell, ob das Terminal den Finder steuern darf – das wird für die Anordnung im DMG-Fenster gebraucht.
 
 </details>
 
@@ -118,7 +123,7 @@ Ergebnis in `dist/`: `DICOM Test Tool.app`, `DICOM-Test-Tool.zip` samt `.sha256`
 
 1. Version in `VERSION` erhöhen und in `CHANGELOG.md` einen Abschnitt `## <Version>` anlegen.
 2. `./release.sh` ausführen: baut die App und erzeugt ZIP, `.sha256` und `dist/RELEASE_NOTES.md`.
-3. Auf GitHub ein Release mit dem Tag `vX.Y.Z` anlegen, den Inhalt von `RELEASE_NOTES.md` als Beschreibung verwenden und **`DICOM-Test-Tool.zip`** sowie **`DICOM-Test-Tool.zip.sha256`** anhängen. Die Dateinamen dürfen nicht geändert werden.
+3. Auf GitHub ein Release mit dem Tag `vX.Y.Z` anlegen, den Inhalt von `RELEASE_NOTES.md` als Beschreibung verwenden und **`DICOM-Test-Tool.dmg`**, **`DICOM-Test-Tool.zip`** sowie **`DICOM-Test-Tool.zip.sha256`** anhängen. Die Dateinamen dürfen nicht geändert werden.
 
 Die App fragt `https://api.github.com/repos/<owner>/<repo>/releases/latest` ab. Der Standard steht in `AppInfo.defaultRepository`; das Repository lässt sich unter *Über › Updates › GitHub-Repository* ändern.
 Zum Testen ohne GitHub zeigt `DICOMTESTTOOL_UPDATE_API=http://127.0.0.1:8765` auf einen lokalen Mock-Server.
@@ -152,7 +157,7 @@ Den Calling AE setzt die Umgebungsvariable `DICOM_AET` (Standard: `DICOMCLI`).
 | `Sources/DicomCore` | DICOM-Implementierung: PDU, Assoziation, DIMSE, Datensätze, Part-10-Dateien, Bilddarstellung |
 | `Sources/DICOMTestTool` | SwiftUI-App |
 | `Sources/dicomcli` | Kommandozeilen-Werkzeug |
-| `Scripts` | Icon-Generator |
+| `Scripts` | Icon-Generator, DMG-Hintergrund und DMG-Erstellung |
 
 </details>
 

@@ -14,9 +14,9 @@ fi
 
 echo
 echo "Release v$VERSION vorbereitet in dist/:"
-ls -1 dist/DICOM-Test-Tool.zip dist/DICOM-Test-Tool.zip.sha256 dist/dicomcli dist/RELEASE_NOTES.md
+ls -1 dist/DICOM-Test-Tool.dmg dist/DICOM-Test-Tool.zip dist/DICOM-Test-Tool.zip.sha256 dist/dicomcli dist/RELEASE_NOTES.md
 echo
 echo "Veröffentlichen (GitHub CLI):"
 echo "  git tag v$VERSION && git push origin v$VERSION"
-echo "  gh release create v$VERSION dist/DICOM-Test-Tool.zip dist/DICOM-Test-Tool.zip.sha256 dist/dicomcli --title \"DICOM Test Tool $VERSION\" --notes-file dist/RELEASE_NOTES.md"
+echo "  gh release create v$VERSION dist/DICOM-Test-Tool.dmg dist/DICOM-Test-Tool.zip dist/DICOM-Test-Tool.zip.sha256 dist/dicomcli --title \"DICOM Test Tool $VERSION\" --notes-file dist/RELEASE_NOTES.md"
 echo "Oder im Browser unter github.com/<owner>/<repo>/releases/new dieselben Dateien hochladen."

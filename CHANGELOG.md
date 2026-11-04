@@ -7,6 +7,7 @@
 - Geführte Einführung durch alle Werkzeuge – im Menüleisten-Menü unter „Einführung …“, unter „Über“ und im Hilfe-Menü; erscheint beim ersten Start automatisch
 - Farbschema wählbar (Allgemein › Darstellung): „Standard (macOS)“ oder „Klinik Dunkel (Schwarz/Orange)“, jederzeit umschaltbar
 - Store › Testbilder: Geburtsdatum mit Kalender und Eingabe als TTMMJJJJ; alle Datumsfelder zeigen das Datum als TT.MM.JJJJ
+- Installation per DMG: Programm-Symbol einfach auf den Ordner „Programme“ ziehen
 - Seite **Über** neu gestaltet: Updates (Update-Kanal Stabil/Vorabversionen), Einführung sowie Daten & Zurücksetzen (Datenordner, Protokolle, Zurücksetzen) an einem Ort
 
 ### Behoben

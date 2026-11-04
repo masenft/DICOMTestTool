@@ -52,4 +52,6 @@ ditto "$STAGE/$APP.app" "dist/$APP.app"
 ditto "$STAGE/dicomcli" dist/dicomcli
 (cd "$STAGE" && ditto -c -k --keepParent "$APP.app" "$OLDPWD/dist/DICOM-Test-Tool.zip")
 (cd dist && shasum -a 256 DICOM-Test-Tool.zip > DICOM-Test-Tool.zip.sha256)
+# DMG for first-time installation (drag into Applications); the ZIP stays for the in-app updater.
+Scripts/make-dmg.sh "$STAGE/$APP.app" dist/DICOM-Test-Tool.dmg "$VERSION"
 echo "Fertig: $(pwd)/dist/$APP.app (Version $VERSION, Build $BUILD_NUMBER)"
