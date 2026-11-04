@@ -294,6 +294,7 @@ final class AppState: ObservableObject {
         if autoStartWatchdog && !watchNodeIDs.isEmpty { startWatchdog() }
         updater.startAutomaticChecks()
         if ProcessInfo.processInfo.environment["DICOMTESTTOOL_NOTIFY_TEST"] == "1" { sendTestNotification() } // test hook
+        SnapshotHook.runIfRequested(self) // test hook for website screenshots
     }
 
     // MARK: Persistence
