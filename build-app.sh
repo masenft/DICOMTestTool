@@ -7,6 +7,10 @@ APP="DICOM Test Tool"
 BUNDLE_ID="de.martinsenft.dicomtesttool"
 VERSION="$(tr -d '[:space:]' < VERSION)"
 BUILD_NUMBER="$(date +%Y%m%d%H%M)"
+# SwiftUI macros (@State etc.) need full Xcode; the Command Line Tools lack the plugins.
+if [[ -z "${DEVELOPER_DIR:-}" && -d /Applications/Xcode.app ]]; then
+  export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+fi
 # Build outside iCloud Drive so the build folder is not synced.
 BUILD_DIR="${TMPDIR:-/tmp}/DICOMTestTool-build"
 

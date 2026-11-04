@@ -10,6 +10,8 @@ struct TourView: View {
     private let pages = TourPage.all
 
     var body: some View {
+        // Clamped: a held arrow key can fire the "Zurück" shortcut again while the button is still fading out.
+        let index = min(max(self.index, 0), pages.count - 1)
         let page = pages[index]
         VStack(spacing: 0) {
             HStack(alignment: .top, spacing: 22) {
@@ -61,7 +63,7 @@ struct TourView: View {
                 HStack(spacing: 6) {
                     ForEach(pages.indices, id: \.self) { i in
                         Circle().fill(i == index ? Color.accentColor : Color.secondary.opacity(0.35)).frame(width: 7, height: 7)
-                            .onTapGesture { withAnimation { index = i } }
+                            .onTapGesture { go(to: i) }
                     }
                 }
                 Spacer()
@@ -72,10 +74,10 @@ struct TourView: View {
                     }
                 }
                 if index > 0 {
-                    Button("Zurück") { withAnimation { index -= 1 } }.keyboardShortcut(.leftArrow, modifiers: [])
+                    Button("Zurück") { go(to: index - 1) }.keyboardShortcut(.leftArrow, modifiers: [])
                 }
                 if index < pages.count - 1 {
-                    Button(index == 0 ? "Tour starten" : "Weiter") { withAnimation { index += 1 } }
+                    Button(index == 0 ? "Tour starten" : "Weiter") { go(to: index + 1) }
                         .keyboardShortcut(.defaultAction)
                 } else {
                     Button("Los geht’s") {
@@ -89,7 +91,13 @@ struct TourView: View {
             .padding(16)
         }
         .frame(width: 760, height: 560)
-        .onAppear { index = 0; UserDefaults.standard.set(true, forKey: TourPage.shownKey) }
+        .onAppear { self.index = 0; UserDefaults.standard.set(true, forKey: TourPage.shownKey) }
+    }
+
+    private func go(to target: Int) {
+        let clamped = min(max(target, 0), pages.count - 1)
+        guard clamped != index else { return }
+        withAnimation { index = clamped }
     }
 }
 

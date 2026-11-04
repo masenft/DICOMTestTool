@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1
+
+### Behoben
+- Absturz in der Einführung, wenn auf der ersten Seite die Pfeiltaste ← (Zurück) mehrfach schnell gedrückt wurde
+
 ## 1.2.0
 
 ### Neu
