@@ -206,6 +206,7 @@ struct StoreView: View {
         .onAppear {
             if !state.storeQueue.isEmpty { add(state.storeQueue); state.storeQueue = [] }
         }
+        .onReceive(NotificationCenter.default.publisher(for: SnapshotHook.storeSend)) { _ in send() } // screenshot hook
     }
 
     private func add(_ urls: [URL]) {

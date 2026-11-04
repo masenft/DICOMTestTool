@@ -312,6 +312,9 @@ struct WorklistView: View {
         }
         .padding()
         .sheet(item: $detail) { r in DatasetDumpView(dataset: r.dataset, title: "Worklist-Eintrag") }
+        .onReceive(NotificationCenter.default.publisher(for: SnapshotHook.worklistRows)) { n in // screenshot hook
+            rows = (n.object as? [DataSet] ?? []).map(WorklistRow.init(dataset:))
+        }
     }
 
     private func query() {
