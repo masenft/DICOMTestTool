@@ -126,13 +126,13 @@ footer .row { display: flex; justify-content: space-between; gap: 24px; flex-wra
 footer p { margin: 0 0 6px; max-width: 640px; }
 
 /* Screenshots */
-.shots { display: grid; gap: 34px; }
+.shots { display: grid; gap: 34px; max-width: 960px; margin: 0 auto; }
 .shots figure { margin: 0; }
 .shots img {
   display: block; width: 100%; height: auto; border-radius: 12px;
   border: 1px solid var(--border); box-shadow: 0 18px 40px rgba(11, 37, 69, .18);
 }
-.shots figcaption { margin-top: 12px; color: var(--muted); font-size: 15px; }
+.shots figcaption { text-align: center; margin-top: 12px; color: var(--muted); font-size: 15px; }
 
 @media (max-width: 640px) {
   .wrap { padding: 0 16px; }
