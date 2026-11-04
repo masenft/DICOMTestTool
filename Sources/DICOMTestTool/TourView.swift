@@ -91,7 +91,7 @@ struct TourView: View {
             .padding(16)
         }
         .frame(width: 760, height: 560)
-        .onAppear { self.index = 0; UserDefaults.standard.set(true, forKey: TourPage.shownKey) }
+        .onAppear { WindowOpener.action = WindowOpener.action ?? openWindow; self.index = 0; UserDefaults.standard.set(true, forKey: TourPage.shownKey) }
     }
 
     private func go(to target: Int) {

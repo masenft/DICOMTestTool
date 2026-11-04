@@ -4,6 +4,7 @@
 
 ### Behoben
 - Absturz in der Einführung, wenn auf der ersten Seite die Pfeiltaste ← (Zurück) mehrfach schnell gedrückt wurde
+- Menüleisten-Menü öffnete sich nicht, solange ein anderes Programm aktiv war (nur grau hinterlegtes Symbol)
 
 ## 1.2.0
 

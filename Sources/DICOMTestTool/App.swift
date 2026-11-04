@@ -7,10 +7,8 @@ import DicomCore
 @main
 struct DICOMTestToolApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    // Not observed here: MenuBarExtra writes its isInserted binding back on every scene update,
-    // which would loop endlessly if the scene re-evaluated on each AppState change.
+    // Not observed here, so the scenes are not rebuilt on every state change.
     private let state = AppState.shared
-    @AppStorage("showMenuBarIcon") private var showMenuBarIcon = true
 
     var body: some Scene {
         Window(AppInfo.name, id: AppInfo.mainWindowID) {
@@ -41,14 +39,7 @@ struct DICOMTestToolApp: App {
         }
         .windowResizability(.contentSize)
         .windowStyle(.hiddenTitleBar)
-
-        MenuBarExtra(isInserted: Binding(get: { showMenuBarIcon },
-                                         set: { if $0 != state.showMenuBarIcon { state.showMenuBarIcon = $0 } })) {
-            MenuBarMenu()
-                .environmentObject(state)
-        } label: {
-            MenuBarLabel(state: state)
-        }
+        // The menu bar icon is an AppKit status item: see MenuBarController.
     }
 }
 
@@ -78,13 +69,6 @@ struct TourMenuButton: View {
     }
 }
 
-struct MenuBarLabel: View {
-    @ObservedObject var state: AppState
-    var body: some View {
-        Image(systemName: state.watchHasFailure ? "exclamationmark.triangle.fill" : "waveform.path.ecg.rectangle")
-    }
-}
-
 final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         let showInDock = UserDefaults.standard.object(forKey: "showInDock") as? Bool ?? true
@@ -92,7 +76,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
         AppTheme.current.applyToApp()
         NSApp.activate(ignoringOtherApps: true)
         if Bundle.main.bundleIdentifier != nil { UNUserNotificationCenter.current().delegate = self }
-        Task { @MainActor in AppState.shared.didFinishLaunching() }
+        Task { @MainActor in
+            MenuBarController.shared.setVisible(AppState.shared.showMenuBarIcon)
+            AppState.shared.didFinishLaunching()
+        }
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -244,7 +231,14 @@ final class AppState: ObservableObject {
     @Published var notificationsEnabled = true { didSet { save() } }
     @Published var notifyWatchdog = true { didSet { save() } }
     @Published var notifySCP = false { didSet { save() } }
-    @Published var showMenuBarIcon = true { didSet { save(); if !showMenuBarIcon && !showInDock { showInDock = true } } }
+    @Published var showMenuBarIcon = true {
+        didSet {
+            save()
+            guard !loading else { return }
+            if !showMenuBarIcon && !showInDock { showInDock = true }
+            MenuBarController.shared.setVisible(showMenuBarIcon)
+        }
+    }
     @Published var showInDock = true {
         didSet {
             save()
@@ -358,6 +352,7 @@ final class AppState: ObservableObject {
         defaults.removePersistentDomain(forName: AppInfo.bundleID)
         for key in defaults.dictionaryRepresentation().keys where Self.ownKeys.contains(key) { defaults.removeObject(forKey: key) }
         load()
+        MenuBarController.shared.setVisible(showMenuBarIcon)
         updater.reload()
         received.removeAll()
         watchStatus.removeAll()

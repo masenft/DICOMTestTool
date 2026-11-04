@@ -37,6 +37,7 @@ struct ContentView: View {
         }
         .sheet(isPresented: $updater.showReleaseSheet) { ReleaseNotesSheet() }
         .onAppear {
+            WindowOpener.action = openWindow
             // First launch: show the guided tour once.
             if !UserDefaults.standard.bool(forKey: TourPage.shownKey) { openTour(openWindow) }
         }
