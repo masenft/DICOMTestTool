@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DICOM Test Tool for macOS – free DICOM connection testing on the Mac</title>
+  <meta name="description" content="Free, open-source DICOM test tool for macOS: C-ECHO, C-STORE, C-FIND/C-MOVE, Modality Worklist, Storage SCP, Watchdog and tag viewer. For IT and connection testing – not for diagnostic use.">
+  <meta name="keywords" content="DICOM test tool, DICOM macOS, DICOM Mac, DICOM echo, C-ECHO, C-STORE, C-FIND, C-MOVE, modality worklist, storage SCP, PACS test, DICOM SCU">
+  <link rel="canonical" href="https://masenft.github.io/DICOMTestTool/">
+  <link rel="alternate" hreflang="en" href="https://masenft.github.io/DICOMTestTool/">
+  <link rel="alternate" hreflang="de" href="https://masenft.github.io/DICOMTestTool/de/">
+  <link rel="alternate" hreflang="x-default" href="https://masenft.github.io/DICOMTestTool/">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="stylesheet" href="style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DICOM Test Tool for macOS">
+  <meta property="og:description" content="Free, native Mac app for testing and troubleshooting DICOM connections: Echo, Store, Query/Retrieve, Worklist, Storage SCP, Watchdog.">
+  <meta property="og:url" content="https://masenft.github.io/DICOMTestTool/">
+  <meta property="og:image" content="https://masenft.github.io/DICOMTestTool/icon.png">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "DICOM Test Tool for macOS",
+    "operatingSystem": "macOS 14 or later",
+    "applicationCategory": "DeveloperApplication",
+    "description": "Free, open-source tool for testing and troubleshooting DICOM network connections: C-ECHO, C-STORE, C-FIND/C-MOVE, Modality Worklist, Storage SCP, Watchdog and tag viewer. Not for diagnostic use.",
+    "url": "https://masenft.github.io/DICOMTestTool/",
+    "downloadUrl": "https://github.com/masenft/DICOMTestTool/releases/latest",
+    "license": "https://opensource.org/licenses/MIT",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "author": { "@type": "Person", "name": "Martin Senft" }
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap">
+      <a class="brand" href="#"><img src="favicon.png" alt="">DICOM Test Tool</a>
+      <div class="links">
+        <a class="hide-sm" href="#features">Features</a>
+        <a class="hide-sm" href="#install">Install</a>
+        <a class="hide-sm" href="#privacy">Privacy</a>
+        <a href="https://github.com/masenft/DICOMTestTool">GitHub</a>
+        <a href="de/" hreflang="de" lang="de">Deutsch</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <img class="icon" src="icon.png" alt="DICOM Test Tool app icon">
+      <h1>DICOM Test Tool for macOS</h1>
+      <p class="lead">A free, native Mac app for testing and troubleshooting DICOM connections between PACS, RIS, modalities and workstations.</p>
+      <p class="protocols">C-ECHO · C-STORE · C-FIND · C-MOVE · Modality Worklist · Storage SCP</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://github.com/masenft/DICOMTestTool/releases/latest/download/DICOM-Test-Tool.dmg">⬇︎ Download for Mac (DMG)</a>
+        <a class="btn btn-ghost" href="https://github.com/masenft/DICOMTestTool">View source on GitHub</a>
+      </div>
+      <p class="meta">Free &amp; open source (MIT) · macOS 14 or later · Apple Silicon &amp; Intel · <a href="https://github.com/masenft/DICOMTestTool/releases" style="color:#fff">Release notes</a></p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="wrap">
+        <div class="notice" role="note">
+          <span class="sym">⚠️</span>
+          <div><strong>For IT and connection testing only – not for diagnostic use.</strong>
+          This software is not a medical device under Regulation (EU) 2017/745 (MDR). Do not use it for diagnosis, reporting, treatment planning or any other clinical decision. The image display only lets you check transferred data from a technical point of view.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="wrap">
+        <h2>Everything you need to test a DICOM connection</h2>
+        <p class="sub">Built for PACS administrators, biomedical and medical IT engineers, and IT support. It uses its own DICOM networking implementation, written natively in Swift, with no third-party libraries.</p>
+        <div class="grid">
+          <div class="card"><div class="emoji">📡</div><h3>Echo (Verification)</h3><p>C-ECHO “DICOM ping” with timings for association, echo and total time, plus repeat runs.</p></div>
+          <div class="card"><div class="emoji">📤</div><h3>Store</h3><p>Send files and folders by drag &amp; drop, or generate test images without real patient data. Implicit ↔ Explicit VR conversion is automatic.</p></div>
+          <div class="card"><div class="emoji">🔍</div><h3>Query / Retrieve</h3><p>C-FIND at patient, study, series and image level, double-click to drill down, C-MOVE to any destination.</p></div>
+          <div class="card"><div class="emoji">📋</div><h3>Modality Worklist</h3><p>Query your RIS worklist exactly as a modality would, and check orders and station assignments.</p></div>
+          <div class="card"><div class="emoji">📥</div><h3>Storage SCP</h3><p>Turn your Mac into a DICOM receiver. Files are sorted by patient ID – ideal as a C-MOVE destination.</p></div>
+          <div class="card"><div class="emoji">❤️</div><h3>Watchdog</h3><p>Keep monitoring nodes with C-ECHO and get a macOS notification when one goes down or comes back.</p></div>
+          <div class="card"><div class="emoji">🖼️</div><h3>Tag viewer</h3><p>All tags including sequences, with filter; image display with windowing, multi-frame, JPEG / JPEG 2000 and PNG export.</p></div>
+          <div class="card"><div class="emoji">📍</div><h3>Menu bar access</h3><p>Start the SCP or Watchdog, send an echo or open any tool from the menu bar – even over full-screen apps.</p></div>
+        </div>
+        <ul class="extras">
+          <li>Detailed protocol log including presentation context negotiation, exportable as TXT</li>
+          <li>Date fields with a calendar picker</li>
+          <li>Guided tour through every tool</li>
+          <li>Light/dark mode or a clinical dark theme (black / orange)</li>
+          <li>Automatic updates from GitHub Releases, with checksum and signature checks</li>
+          <li>Launch at login, auto-start of SCP and Watchdog</li>
+          <li>Command-line tool <code>dicomcli</code> included</li>
+          <li>User interface currently in German</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="install">
+      <div class="wrap">
+        <h2>Installation</h2>
+        <p class="sub">Takes less than a minute. Updates are then installed from within the app.</p>
+        <ol class="steps">
+          <li>Download <a href="https://github.com/masenft/DICOMTestTool/releases/latest/download/DICOM-Test-Tool.dmg"><strong>DICOM-Test-Tool.dmg</strong></a> and open it.</li>
+          <li>Drag <strong>DICOM Test Tool</strong> onto the <strong>Applications</strong> folder.</li>
+          <li><strong>First launch only:</strong> macOS blocks the app because it is not notarised by Apple. Click <em>Done</em>, open <strong>System Settings › Privacy &amp; Security</strong>, scroll down and click <strong>Open Anyway</strong>.</li>
+        </ol>
+        <p class="req">Requirements: macOS 14 Sonoma or later, Apple Silicon or Intel Mac.</p>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <div class="wrap two">
+        <div>
+          <h2>Privacy</h2>
+          <ul class="list">
+            <li><strong>No telemetry, analytics, ads or account.</strong> The app sends nothing to the developer.</li>
+            <li>Network connections go only to the DICOM nodes you configure, and to GitHub for the update check (you can turn it off). GitHub sees your IP address for these requests.</li>
+            <li>Settings, logs (kept 30 days) and received files are stored locally on your Mac only.</li>
+            <li>DICOM objects and logs can contain patient data – handle them according to your organisation's policies, and remove patient data before sharing logs.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Intended use &amp; legal</h2>
+          <ul class="list">
+            <li><strong>Intended use:</strong> setting up, testing and troubleshooting DICOM network connections, by IT staff, PACS administrators and biomedical engineers.</li>
+            <li><strong>Not certified:</strong> not certified or validated by NEMA or any other body; no claim of full DICOM conformance and no DICOM Conformance Statement.</li>
+            <li><strong>Trademarks:</strong> DICOM® is the registered trademark of the National Electrical Manufacturers Association (NEMA) for its standards publications relating to digital communications of medical information. It is used here only descriptively; this project is not affiliated with NEMA. macOS is a trademark of Apple Inc.</li>
+            <li>A private, non-commercial open-source project under the <a href="https://github.com/masenft/DICOMTestTool/blob/main/LICENSE">MIT License</a>, provided without warranty.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap row">
+      <div>
+        <p><strong>DICOM Test Tool for macOS</strong> · © 2026 Martin Senft · private, non-commercial open-source project</p>
+        <p>This website uses no cookies, no tracking and no external resources. It is hosted on GitHub Pages; GitHub processes your IP address to deliver it (<a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub privacy statement</a>).</p>
+      </div>
+      <div>
+        <p><a href="https://github.com/masenft/DICOMTestTool/issues">Report a bug</a> · <a href="de/" hreflang="de" lang="de">Deutsch</a></p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.0
+
+### Neu
+- **Über › Datenschutz**: welche Daten die App speichert, welche Verbindungen sie aufbaut (nur eigene DICOM-Knoten und GitHub für Updates), keine Telemetrie
+- **Über › Zweckbestimmung & rechtliche Hinweise**: Werkzeug für IT und Verbindungstests, kein Medizinprodukt, nicht für diagnostische Zwecke; keine Zertifizierung; Markenhinweis DICOM®/NEMA
+- Viewer: Hinweis, dass die Bildanzeige nur der technischen Kontrolle dient
+- Englische README und Projekt-Website (Englisch/Deutsch) unter masenft.github.io/DICOMTestTool
+
 ## 1.2.1
 
 ### Behoben

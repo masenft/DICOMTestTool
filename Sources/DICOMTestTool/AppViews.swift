@@ -188,6 +188,10 @@ struct AboutView: View {
                     .buttonStyle(.borderedProminent).controlSize(.large)
             } content: { EmptyView() }
             Divider()
+            privacyCard
+            Divider()
+            intendedUseCard
+            Divider()
             dataSection
         }
         .padding(24)
@@ -212,7 +216,8 @@ struct AboutView: View {
                     if let u = updater.repositoryURL { Link("Quellcode auf GitHub", destination: u) }
                 }
                 .font(.callout).padding(.top, 2)
-                Text("Open Source unter MIT-Lizenz · Nicht für diagnostische Zwecke.").font(.caption).foregroundStyle(.secondary)
+                Text("Privates, nicht-kommerzielles Open-Source-Projekt unter MIT-Lizenz · Werkzeug für IT und Verbindungstests – nicht für diagnostische Zwecke.")
+                    .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             }
         }
     }
@@ -290,6 +295,46 @@ struct AboutView: View {
         return s
     }
 
+    private var privacyCard: some View {
+        AppCard(icon: "lock.shield", title: "Datenschutz",
+                subtitle: "Keine Telemetrie, keine Werbung, kein Konto – Ihre Daten bleiben auf diesem Mac.") {
+            EmptyView()
+        } content: {
+            VStack(alignment: .leading, spacing: 10) {
+                InfoRow(icon: "chart.bar.xaxis", title: "Keine Nutzungsdaten",
+                        text: "Die App erhebt keine Statistiken, verwendet keine Analyse- oder Tracking-Dienste und sendet nichts an den Entwickler.")
+                InfoRow(icon: "network", title: "Netzwerkverbindungen",
+                        text: "Verbindungen entstehen nur zu den DICOM-Knoten, die Sie selbst eintragen, sowie für die Update-Prüfung zu GitHub (api.github.com, github.com). Dabei sieht GitHub Ihre IP-Adresse; es gilt die Datenschutzerklärung von GitHub. Die automatische Update-Suche lässt sich oben unter „Updates“ abschalten.")
+                InfoRow(icon: "internaldrive", title: "Lokale Speicherung",
+                        text: "Einstellungen und Knoten liegen in den macOS-Einstellungen, Protokolle im App-Datenordner (30 Tage). Empfangene DICOM-Dateien speichert der Storage SCP nur im von Ihnen gewählten Ordner.")
+                InfoRow(icon: "person.text.rectangle", title: "Patientendaten",
+                        text: "DICOM-Objekte, Protokolle und Log-Dateien können Patientendaten enthalten (z. B. Name, ID, Geburtsdatum). Bitte behandeln Sie sie entsprechend den Vorgaben Ihrer Einrichtung und entfernen Sie Patientendaten, bevor Sie Protokolle weitergeben oder in einer Fehlermeldung veröffentlichen. Für Tests eignen sich die Testbilder unter „Store“.")
+                InfoRow(icon: "bell", title: "Mitteilungen und Absturzberichte",
+                        text: "Popup-Hinweise erzeugt macOS lokal. Absturzberichte sammelt nur macOS selbst, sofern Sie das in den Systemeinstellungen erlaubt haben; die App sendet keine eigenen Berichte.")
+            }
+        }
+    }
+
+    private var intendedUseCard: some View {
+        AppCard(icon: "exclamationmark.shield", title: "Zweckbestimmung & rechtliche Hinweise",
+                subtitle: "Ein Werkzeug für die IT – kein Medizinprodukt.") {
+            EmptyView()
+        } content: {
+            VStack(alignment: .leading, spacing: 10) {
+                InfoRow(icon: "wrench.and.screwdriver", title: "Wofür die App gedacht ist",
+                        text: "Für Administratorinnen und Administratoren, Medizintechnik und IT-Support: zum Einrichten, Testen und zur Fehlersuche von DICOM-Verbindungen zwischen PACS, RIS, Modalitäten und Arbeitsplätzen.")
+                InfoRow(icon: "cross.case", title: "Nicht für diagnostische Zwecke", tint: .orange,
+                        text: "Die App ist kein Medizinprodukt im Sinne der Verordnung (EU) 2017/745 (MDR). Sie darf nicht zur Befundung, Diagnose, Therapieplanung oder für andere medizinische Entscheidungen verwendet werden. Die Bildanzeige im Viewer dient nur der technischen Kontrolle übertragener Daten.")
+                InfoRow(icon: "checkmark.seal", title: "Keine Zertifizierung",
+                        text: "Die App ist weder von der NEMA noch von einer anderen Stelle zertifiziert oder geprüft und erhebt keinen Anspruch auf vollständige DICOM-Konformität. Ein DICOM Conformance Statement liegt nicht vor.")
+                InfoRow(icon: "c.circle", title: "Marken",
+                        text: "DICOM® ist eine eingetragene Marke der National Electrical Manufacturers Association (NEMA) für ihre Normen zur digitalen Kommunikation medizinischer Informationen. Die Nennung erfolgt nur beschreibend; es besteht keine Verbindung zur NEMA. macOS ist eine Marke von Apple Inc.")
+                InfoRow(icon: "doc.plaintext", title: "Lizenz und Haftung",
+                        text: "Privates, nicht-kommerzielles Open-Source-Projekt unter der MIT-Lizenz. Die Software wird ohne jede Gewährleistung bereitgestellt; die Nutzung erfolgt auf eigene Verantwortung.")
+            }
+        }
+    }
+
     private var dataSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Label("Daten & Zurücksetzen", systemImage: "arrow.counterclockwise")
@@ -306,6 +351,24 @@ struct AboutView: View {
                 Button(role: .destructive) { confirmReset = true } label: { Text("Alles auf Standard zurücksetzen").foregroundStyle(.red) }
             }
             .controlSize(.large)
+        }
+    }
+}
+
+/// Icon, bold title and explanatory text – used in the information cards on the About page.
+struct InfoRow: View {
+    let icon: String
+    let title: String
+    var tint: Color = .accentColor
+    let text: String
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: icon).foregroundStyle(tint).frame(width: 22).padding(.top, 1)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title).bold()
+                Text(text).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            }
         }
     }
 }

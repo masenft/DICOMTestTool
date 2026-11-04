@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DICOM Test Tool für macOS – DICOM-Verbindungen kostenlos am Mac testen</title>
+  <meta name="description" content="Kostenloses Open-Source-DICOM-Testtool für macOS: C-ECHO, C-STORE, C-FIND/C-MOVE, Modality Worklist, Storage SCP, Watchdog und Tag-Viewer. Für IT und Verbindungstests – nicht für diagnostische Zwecke.">
+  <meta name="keywords" content="DICOM Test Tool, DICOM macOS, DICOM Mac, DICOM Echo, C-ECHO, C-STORE, C-FIND, C-MOVE, Modality Worklist, Storage SCP, PACS testen, DICOM SCU">
+  <link rel="canonical" href="https://masenft.github.io/DICOMTestTool/de/">
+  <link rel="alternate" hreflang="en" href="https://masenft.github.io/DICOMTestTool/">
+  <link rel="alternate" hreflang="de" href="https://masenft.github.io/DICOMTestTool/de/">
+  <link rel="alternate" hreflang="x-default" href="https://masenft.github.io/DICOMTestTool/">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../icon.png">
+  <link rel="stylesheet" href="../style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="DICOM Test Tool für macOS">
+  <meta property="og:description" content="Kostenlose, native Mac-App zum Testen und zur Fehlersuche von DICOM-Verbindungen: Echo, Store, Query/Retrieve, Worklist, Storage SCP, Watchdog.">
+  <meta property="og:url" content="https://masenft.github.io/DICOMTestTool/de/">
+  <meta property="og:image" content="https://masenft.github.io/DICOMTestTool/icon.png">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "DICOM Test Tool für macOS",
+    "inLanguage": "de",
+    "operatingSystem": "macOS 14 oder neuer",
+    "applicationCategory": "DeveloperApplication",
+    "description": "Kostenloses Open-Source-Werkzeug zum Testen und zur Fehlersuche von DICOM-Netzwerkverbindungen: C-ECHO, C-STORE, C-FIND/C-MOVE, Modality Worklist, Storage SCP, Watchdog und Tag-Viewer. Nicht für diagnostische Zwecke.",
+    "url": "https://masenft.github.io/DICOMTestTool/de/",
+    "downloadUrl": "https://github.com/masenft/DICOMTestTool/releases/latest",
+    "license": "https://opensource.org/licenses/MIT",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "author": { "@type": "Person", "name": "Martin Senft" }
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap">
+      <a class="brand" href="#"><img src="../favicon.png" alt="">DICOM Test Tool</a>
+      <div class="links">
+        <a class="hide-sm" href="#funktionen">Funktionen</a>
+        <a class="hide-sm" href="#installation">Installation</a>
+        <a class="hide-sm" href="#datenschutz">Datenschutz</a>
+        <a href="https://github.com/masenft/DICOMTestTool">GitHub</a>
+        <a href="../" hreflang="en" lang="en">English</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <img class="icon" src="../icon.png" alt="App-Icon des DICOM Test Tool">
+      <h1>DICOM Test Tool für macOS</h1>
+      <p class="lead">Die kostenlose, native Mac-App zum Testen und zur Fehlersuche von DICOM-Verbindungen zwischen PACS, RIS, Modalitäten und Arbeitsplätzen.</p>
+      <p class="protocols">C-ECHO · C-STORE · C-FIND · C-MOVE · Modality Worklist · Storage SCP</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://github.com/masenft/DICOMTestTool/releases/latest/download/DICOM-Test-Tool.dmg">⬇︎ Für Mac herunterladen (DMG)</a>
+        <a class="btn btn-ghost" href="https://github.com/masenft/DICOMTestTool">Quellcode auf GitHub</a>
+      </div>
+      <p class="meta">Kostenlos &amp; Open Source (MIT) · ab macOS 14 · Apple Silicon &amp; Intel · <a href="https://github.com/masenft/DICOMTestTool/releases" style="color:#fff">Versionshinweise</a></p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="wrap">
+        <div class="notice" role="note">
+          <span class="sym">⚠️</span>
+          <div><strong>Nur für IT und Verbindungstests – nicht für diagnostische Zwecke.</strong>
+          Die Software ist kein Medizinprodukt im Sinne der Verordnung (EU) 2017/745 (MDR). Sie darf nicht zur Befundung, Diagnose, Therapieplanung oder für andere medizinische Entscheidungen verwendet werden. Die Bildanzeige dient nur der technischen Kontrolle übertragener Daten.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="funktionen">
+      <div class="wrap">
+        <h2>Alles, was Sie zum Testen einer DICOM-Verbindung brauchen</h2>
+        <p class="sub">Für PACS-Administration, Medizintechnik und IT-Support. Mit eigener DICOM-Netzwerkimplementierung, nativ in Swift geschrieben, ohne Fremdbibliotheken.</p>
+        <div class="grid">
+          <div class="card"><div class="emoji">📡</div><h3>Echo (Verification)</h3><p>C-ECHO als „DICOM-Ping“ mit Zeitmessung für Assoziation, Echo und Gesamtzeit, auch mit Wiederholungen.</p></div>
+          <div class="card"><div class="emoji">📤</div><h3>Store</h3><p>Dateien und Ordner per Drag &amp; Drop senden oder Testbilder ohne echte Patientendaten erzeugen. Implicit ↔ Explicit VR wird automatisch umgewandelt.</p></div>
+          <div class="card"><div class="emoji">🔍</div><h3>Query / Retrieve</h3><p>C-FIND auf Patient-, Studien-, Serien- und Bildebene, Drill-down per Doppelklick, C-MOVE an beliebige Ziele.</p></div>
+          <div class="card"><div class="emoji">📋</div><h3>Modality Worklist</h3><p>Die Worklist des RIS abfragen, genau wie eine Modalität – und Aufträge und Stationszuordnungen prüfen.</p></div>
+          <div class="card"><div class="emoji">📥</div><h3>Storage SCP</h3><p>Macht den Mac zum DICOM-Empfänger, sortiert nach Patienten-ID – ideal als C-MOVE-Ziel.</p></div>
+          <div class="card"><div class="emoji">❤️</div><h3>Watchdog</h3><p>Überwacht Knoten dauerhaft per C-ECHO und meldet Ausfall und Wiederherstellung als macOS-Mitteilung.</p></div>
+          <div class="card"><div class="emoji">🖼️</div><h3>Tag-Viewer</h3><p>Alle Tags inklusive Sequenzen mit Filter; Bildanzeige mit Fensterung, Multiframe, JPEG / JPEG 2000 und PNG-Export.</p></div>
+          <div class="card"><div class="emoji">📍</div><h3>Menüleiste</h3><p>SCP oder Watchdog starten, Echo senden oder jedes Werkzeug öffnen – direkt aus der Menüleiste, auch über Vollbild-Programmen.</p></div>
+        </div>
+        <ul class="extras">
+          <li>Ausführliches Protokoll inklusive Presentation-Context-Aushandlung, als TXT exportierbar</li>
+          <li>Datumsfelder mit Kalender, Eingabe auch als <code>TTMMJJJJ</code></li>
+          <li>Geführte Einführung durch alle Werkzeuge</li>
+          <li>Hell/Dunkel oder Farbschema „Klinik Dunkel“ (Schwarz/Orange)</li>
+          <li>Automatische Updates über GitHub-Releases mit Prüfsummen- und Signaturprüfung</li>
+          <li>Start bei Anmeldung, Autostart von SCP und Watchdog</li>
+          <li>Kommandozeilen-Werkzeug <code>dicomcli</code> inklusive</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="installation">
+      <div class="wrap">
+        <h2>Installation</h2>
+        <p class="sub">Dauert keine Minute. Spätere Updates installiert die App selbst.</p>
+        <ol class="steps">
+          <li><a href="https://github.com/masenft/DICOMTestTool/releases/latest/download/DICOM-Test-Tool.dmg"><strong>DICOM-Test-Tool.dmg</strong></a> herunterladen und per Doppelklick öffnen.</li>
+          <li><strong>DICOM Test Tool</strong> auf den Ordner <strong>Programme</strong> ziehen.</li>
+          <li><strong>Nur beim ersten Start:</strong> macOS blockiert die App, weil sie nicht von Apple notarisiert ist. Auf <em>Fertig</em> klicken, <strong>Systemeinstellungen › Datenschutz &amp; Sicherheit</strong> öffnen, nach unten scrollen und <strong>Dennoch öffnen</strong> wählen.</li>
+        </ol>
+        <p class="req">Voraussetzungen: macOS 14 Sonoma oder neuer, Mac mit Apple Silicon oder Intel.</p>
+      </div>
+    </section>
+
+    <section id="datenschutz">
+      <div class="wrap two">
+        <div>
+          <h2>Datenschutz</h2>
+          <ul class="list">
+            <li><strong>Keine Telemetrie, keine Analyse-Dienste, keine Werbung, kein Konto.</strong> Die App sendet nichts an den Entwickler.</li>
+            <li>Netzwerkverbindungen entstehen nur zu den DICOM-Knoten, die Sie selbst eintragen, sowie zur Update-Prüfung zu GitHub (abschaltbar). Dabei sieht GitHub Ihre IP-Adresse.</li>
+            <li>Einstellungen, Protokolle (30 Tage) und empfangene Dateien bleiben ausschließlich lokal auf Ihrem Mac.</li>
+            <li>DICOM-Objekte und Protokolle können Patientendaten enthalten – bitte nach den Vorgaben Ihrer Einrichtung behandeln und vor der Weitergabe Patientendaten entfernen.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Zweckbestimmung &amp; Rechtliches</h2>
+          <ul class="list">
+            <li><strong>Zweckbestimmung:</strong> Einrichten, Testen und Fehlersuche von DICOM-Netzwerkverbindungen durch IT, PACS-Administration und Medizintechnik.</li>
+            <li><strong>Keine Zertifizierung:</strong> weder von der NEMA noch von einer anderen Stelle zertifiziert oder geprüft; kein Anspruch auf vollständige DICOM-Konformität, kein DICOM Conformance Statement.</li>
+            <li><strong>Marken:</strong> DICOM® ist eine eingetragene Marke der National Electrical Manufacturers Association (NEMA) für ihre Normen zur digitalen Kommunikation medizinischer Informationen. Die Nennung erfolgt nur beschreibend; es besteht keine Verbindung zur NEMA. macOS ist eine Marke von Apple Inc.</li>
+            <li>Ein privates, nicht-kommerzielles Open-Source-Projekt unter der <a href="https://github.com/masenft/DICOMTestTool/blob/main/LICENSE">MIT-Lizenz</a>, ohne Gewährleistung.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap row">
+      <div>
+        <p><strong>DICOM Test Tool für macOS</strong> · © 2026 Martin Senft · privates, nicht-kommerzielles Open-Source-Projekt</p>
+        <p>Diese Website verwendet keine Cookies, kein Tracking und lädt keine externen Inhalte. Sie wird über GitHub Pages bereitgestellt; GitHub verarbeitet dabei Ihre IP-Adresse (<a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement">Datenschutzerklärung von GitHub</a>).</p>
+      </div>
+      <div>
+        <p><a href="https://github.com/masenft/DICOMTestTool/issues">Fehler melden</a> · <a href="../" hreflang="en" lang="en">English</a></p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

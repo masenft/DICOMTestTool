@@ -212,6 +212,8 @@ struct ViewerView: View {
                     Button { state.storeQueue.append(u); state.section = .store } label: { Label("Senden …", systemImage: "paperplane") }
                 }
             }
+            Label("Bildanzeige nur zur technischen Kontrolle der übertragenen Daten – nicht für diagnostische Zwecke.", systemImage: "exclamationmark.triangle")
+                .font(.caption).foregroundStyle(.orange)
             if let e = model.file?.parseError {
                 Text("Warnung: \(e)").foregroundStyle(.orange).font(.callout)
             }

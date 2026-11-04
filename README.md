@@ -1,166 +1,171 @@
 <p align="center">
-  <img src="Resources/AppIcon.png" width="160" alt="DICOM Test Tool Icon">
+  <img src="Resources/AppIcon.png" width="160" alt="DICOM Test Tool for macOS icon">
 </p>
 
-<h1 align="center">DICOM Test Tool</h1>
+<h1 align="center">DICOM Test Tool for macOS</h1>
 
 <p align="center">
-  <b>Natives macOS-Werkzeug zum Testen und zur Fehlersuche von DICOM-Verbindungen</b><br>
-  Echo · Store · Query/Retrieve · Worklist · Storage SCP · Watchdog · Viewer
+  <b>A free, native Mac app for testing and troubleshooting DICOM connections</b><br>
+  C-ECHO · C-STORE · C-FIND / C-MOVE · Modality Worklist · Storage SCP · Watchdog · Tag viewer
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/macOS-14%2B-black?logo=apple" alt="macOS 14+">
   <img src="https://img.shields.io/badge/Apple%20Silicon%20%26%20Intel-universal-555" alt="Universal">
   <img src="https://img.shields.io/badge/Swift-SwiftUI-F05138?logo=swift&logoColor=white" alt="Swift">
-  <img src="https://img.shields.io/badge/Lizenz-MIT-blue" alt="MIT-Lizenz">
+  <img src="https://img.shields.io/badge/License-MIT-blue" alt="MIT License">
 </p>
 
 <p align="center">
-  <a href="../../releases/latest"><b>⬇️ Neueste Version herunterladen</b></a>
+  <a href="../../releases/latest"><b>⬇️ Download the latest version (DMG)</b></a> ·
+  <a href="https://masenft.github.io/DICOMTestTool/">Website</a> ·
+  <a href="README.de.md">🇩🇪 Deutsche Version</a>
 </p>
 
 ---
 
-## Worum geht es?
+## What is it?
 
-**DICOM Test Tool** ist ein kostenloses Open-Source-Programm für den Mac. Administratoren, Medizintechnikerinnen und Medizintechniker sowie der IT-Support in Radiologie, Kliniken und Praxen prüfen damit schnell, ob die Kommunikation zwischen PACS, RIS, Modalitäten und Befundstationen funktioniert – und finden heraus, woran es hakt, wenn sie es nicht tut.
+**DICOM Test Tool for macOS** is a free, open-source app for PACS administrators, biomedical and medical IT engineers, and IT support staff. Use it to check quickly whether PACS, RIS, modalities and workstations can talk to each other – and to find out why they can't.
 
-Die App ist vollständig in Swift geschrieben und bringt eine **eigene DICOM-Implementierung ohne Fremdbibliotheken** mit.
+It is written natively in Swift and SwiftUI and has its **own DICOM networking implementation with no third-party libraries**.
 
 > [!WARNING]
-> Dies ist ein Test- und Diagnosewerkzeug für die IT. Es ist **kein Medizinprodukt** und **nicht für diagnostische Zwecke** bestimmt.
+> **For IT and connection testing only – not for diagnostic use.**
+> This software is **not a medical device** under Regulation (EU) 2017/745 (MDR) or comparable regulations. It must not be used for diagnosis, reporting, treatment planning or any other clinical decision. The image display only lets you check transferred data from a technical point of view.
 
-## Funktionen
+## Features
 
-| Werkzeug | Was es macht |
+| Tool | What it does |
 |---|---|
-| 🖧 **Knoten & Einstellungen** | Gegenstellen mit AE-Titel, Host und Port verwalten; eigener Calling AE und Timeout |
-| 📡 **Echo (Verification)** | C-ECHO als „DICOM-Ping“ mit Zeitmessung (Assoziation, Echo, gesamt) und Wiederholungen |
-| 📤 **Store (Senden)** | C-STORE von Dateien und Ordnern per Drag & Drop; Testbild-Generator ohne echte Patientendaten; automatische Umwandlung Implicit ↔ Explicit VR |
-| 🔍 **Query / Retrieve** | C-FIND (Study/Patient Root) auf Patient-, Studien-, Serien- und Bildebene; Drill-down per Doppelklick; C-MOVE zu beliebigem Ziel |
-| 📋 **Worklist** | Modality-Worklist-Abfrage beim RIS – so, wie es eine Modalität tun würde |
-| 📥 **Storage SCP** | Macht den Mac zum DICOM-Empfänger; speichert sortiert nach Patienten-ID; ideal als C-MOVE-Ziel |
-| ❤️ **Watchdog** | Überwacht Knoten dauerhaft per C-ECHO und meldet Ausfall und Wiederherstellung als macOS-Mitteilung |
-| 🖼️ **Viewer / Tag-Dump** | Alle Tags inklusive Sequenzen mit Filter; Bildanzeige mit Fensterung, Multiframe, JPEG/JPEG 2000, PNG-Export |
+| 🖧 **Nodes & settings** | Manage remote nodes (AE title, host, port); your own calling AE title and timeout |
+| 📡 **Echo (Verification)** | C-ECHO “DICOM ping” with timings (association, echo, total) and repeat count |
+| 📤 **Store** | C-STORE files and folders via drag & drop; built-in test image generator (no real patient data); automatic Implicit ↔ Explicit VR conversion |
+| 🔍 **Query / Retrieve** | C-FIND (Study / Patient Root) at patient, study, series and image level; double-click to drill down; C-MOVE to any destination |
+| 📋 **Modality Worklist** | MWL query against your RIS – just like a modality would send it |
+| 📥 **Storage SCP** | Turns your Mac into a DICOM receiver; files are sorted by patient ID; ideal as a C-MOVE destination |
+| ❤️ **Watchdog** | Keeps monitoring nodes with C-ECHO and sends a macOS notification on failure and recovery |
+| 🖼️ **Viewer / tag dump** | All tags including sequences, with filter; image display with windowing, multi-frame, JPEG / JPEG 2000, PNG export |
 
-**Außerdem:**
+**Also included:**
 
-- 📍 **Menüleisten-Symbol** – SCP und Watchdog starten und stoppen, Echo senden, jedes Werkzeug öffnen, auch über Vollbild-Programmen
-- 📝 **Protokoll** aller Abläufe inklusive Presentation-Context-Aushandlung, als TXT exportierbar
-- 📅 **Datumsfelder mit Kalender** – oder direkt eintippen als `TTMMJJJJ` bzw. `TT.MM.JJJJ`
-- 🎓 **Geführte Einführung** durch alle Werkzeuge
-- 🎨 **Farbschemata:** Standard (macOS) oder Klinik Dunkel (Schwarz/Orange)
-- 🔄 **Automatische Updates** über GitHub-Releases, mit Release Notes und Prüfung von Prüfsumme und Signatur
-- 🚀 Start bei Anmeldung, Autostart von SCP und Watchdog, Log-Dateien (30 Tage)
+- 📍 **Menu bar icon** – start and stop the SCP and Watchdog, send an echo, open any tool, even over full-screen apps
+- 📝 **Protocol log** of every step, including presentation context negotiation, exportable as TXT
+- 📅 **Date fields with a calendar** – or type `DDMMYYYY` / `DD.MM.YYYY`
+- 🎓 **Guided tour** through all tools
+- 🎨 **Colour schemes:** standard (macOS) or clinical dark (black / orange)
+- 🔄 **Automatic updates** via GitHub Releases, with release notes plus checksum and signature checks
+- 🚀 Launch at login, auto-start of the SCP and Watchdog, log files (kept 30 days)
+
+> The user interface is currently in **German**.
 
 ## Installation
 
-1. Unter [**Releases**](../../releases/latest) die Datei **`DICOM-Test-Tool.dmg`** herunterladen.
-2. Die DMG-Datei per Doppelklick öffnen.
-3. Im Fenster das Symbol **DICOM Test Tool** auf den Ordner **Programme** ziehen.
-4. Das Fenster schließen und im Finder links neben „DICOM Test Tool 1.x“ auf ⏏ klicken (auswerfen).
-5. Die App aus dem Programme-Ordner oder über Spotlight (`⌘ Leertaste`, „DICOM“) starten.
-
-Die Datei `DICOM-Test-Tool.zip` im Release wird von der eingebauten Update-Funktion verwendet und muss nicht heruntergeladen werden.
+1. Download **`DICOM-Test-Tool.dmg`** from [**Releases**](../../releases/latest).
+2. Open the DMG and drag **DICOM Test Tool** onto the **Applications** folder (“Programme”).
+3. Eject the disk image and start the app from Applications or Spotlight.
 
 > [!IMPORTANT]
-> **Beim ersten Start** blockiert macOS die App, weil sie nicht über den kostenpflichtigen Apple-Notarisierungsdienst beglaubigt ist.
-> So geben Sie sie einmalig frei:
-> 1. Die Meldung mit **Fertig** schließen.
-> 2. **Systemeinstellungen › Datenschutz & Sicherheit** öffnen.
-> 3. Ganz unten bei *„DICOM Test Tool“ wurde blockiert* auf **Dennoch öffnen** klicken und mit dem Passwort bestätigen.
+> **First launch:** macOS blocks the app because it is not notarised by Apple. To allow it once:
+> 1. Close the message with **Done**.
+> 2. Open **System Settings › Privacy & Security**.
+> 3. Scroll down to *“DICOM Test Tool” was blocked* and click **Open Anyway**, then confirm.
 >
-> Danach startet die App ganz normal. Spätere Updates über die App brauchen diese Freigabe nicht erneut.
+> After that the app starts normally, including after in-app updates.
 
-**Systemvoraussetzungen:** macOS 14 (Sonoma) oder neuer, Apple Silicon oder Intel.
+**Requirements:** macOS 14 Sonoma or later, Apple Silicon or Intel.
 
 ## Updates
 
-Die App sucht einmal täglich automatisch nach neuen Versionen. Gibt es eine, öffnet sich ein Fenster mit den Neuerungen und dem Button **„Installieren und neu starten“**.
-Manuell geht es über **Über › Updates › Nach Updates suchen …** oder über das Menüleisten-Symbol.
+The app checks for new versions once a day. When one is available, a window shows what's new, with an **Install and Restart** button. You can also check manually under *Über › Updates*, or from the menu bar icon. You can choose between **stable** releases and **pre-releases**.
 
-Unter *Update-Kanal* lässt sich wählen, ob nur **stabile Versionen** oder auch **Vorabversionen** angeboten werden.
+## Privacy
 
-## Erste Schritte
+- **No telemetry, no analytics, no ads, no account.** The app sends nothing to the developer.
+- **Network connections** go only to the DICOM nodes you configure, and to GitHub (`api.github.com`, `github.com`) for the update check. GitHub sees your IP address for these requests; [GitHub's privacy statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) applies. You can turn off the automatic update check.
+- **Local storage only:** settings live in macOS user defaults, logs in `~/Library/Application Support/DICOM Test Tool` (kept 30 days), and received DICOM files only in the folder you choose.
+- **Patient data:** DICOM objects, logs and the protocol can contain patient data. Handle them according to your organisation's policies, and **remove patient data before sharing logs or opening an issue**.
 
-1. **Knoten & Einstellungen** öffnen, den eigenen *Calling AE-Titel* eintragen und eine Gegenstelle (AE-Titel, IP, Port) anlegen.
-2. Mit **Echo** die Verbindung testen.
-3. Mit **Store** Testbilder senden oder mit **Query / Retrieve** im PACS suchen.
+## Intended use & legal notes
 
-Die geführte Tour gibt es jederzeit im Menüleisten-Menü unter **Einführung …**
+- **Intended use:** setting up, testing and troubleshooting DICOM network connections, by IT staff, PACS administrators and biomedical engineers.
+- **Not a medical device, not for diagnostic use** – see the warning above.
+- **No certification:** this software is not certified or validated by NEMA or any other body, and makes no claim of full DICOM conformance. No DICOM Conformance Statement is provided.
+- **Trademarks:** DICOM® is the registered trademark of the National Electrical Manufacturers Association (NEMA) for its standards publications relating to digital communications of medical information. It is used here only descriptively; this project is not affiliated with or endorsed by NEMA. macOS is a trademark of Apple Inc.
+- **Private project:** a private, non-commercial open-source project, provided under the MIT License **without any warranty**.
 
-## Bekannte Einschränkungen
+## Known limitations
 
-- Kein DICOM Print, kein C-GET, kein TLS.
-- Viewer: JPEG Lossless, JPEG-LS und RLE werden nicht dekodiert (die Tags werden trotzdem angezeigt).
-- Deflated und Explicit VR Big Endian können nicht gelesen werden (Empfangen und Weitersenden funktioniert).
+- No DICOM Print, no C-GET, no TLS.
+- Viewer: JPEG Lossless, JPEG-LS and RLE are not decoded (tags are still shown).
+- Deflated and Explicit VR Big Endian files cannot be read (receiving and forwarding them works).
 
-## Fehler melden und Wünsche
+## Bugs and feature requests
 
-Fehler und Ideen bitte als [**Issue**](../../issues) melden. Am hilfreichsten ist ein exportiertes Protokoll (**Protokoll › Exportieren …**) – vorher bitte Patientendaten entfernen.
+Please open an [**issue**](../../issues). An exported protocol (*Protokoll › Exportieren …*) helps most – **please remove patient data first**.
 
 ---
 
-## Für Entwickler
+## For developers
 
 <details>
-<summary><b>Aus dem Quellcode bauen</b></summary>
+<summary><b>Build from source</b></summary>
 
-Voraussetzung: Xcode 15 oder neuer (bzw. die Command Line Tools mit Swift 5.9+).
+Requires Xcode 15 or later.
 
 ```bash
 ./build-app.sh
 ```
 
-Ergebnis in `dist/`: `DICOM Test Tool.app`, `DICOM-Test-Tool.dmg` (Installation per Drag & Drop), `DICOM-Test-Tool.zip` samt `.sha256` (für die Update-Funktion) und das Kommandozeilen-Werkzeug `dicomcli`.
-Beim ersten Bauen fragt macOS eventuell, ob das Terminal den Finder steuern darf – das wird für die Anordnung im DMG-Fenster gebraucht.
+Output in `dist/`: `DICOM Test Tool.app`, `DICOM-Test-Tool.dmg` (drag & drop installer), `DICOM-Test-Tool.zip` plus `.sha256` (used by the updater) and the command-line tool `dicomcli`.
+On the first build, macOS may ask whether Terminal may control Finder. This is needed to lay out the DMG window.
 
 </details>
 
 <details>
-<summary><b>Release veröffentlichen</b></summary>
+<summary><b>Publishing a release</b></summary>
 
-1. Version in `VERSION` erhöhen und in `CHANGELOG.md` einen Abschnitt `## <Version>` anlegen.
-2. `./release.sh` ausführen: baut die App und erzeugt ZIP, `.sha256` und `dist/RELEASE_NOTES.md`.
-3. Auf GitHub ein Release mit dem Tag `vX.Y.Z` anlegen, den Inhalt von `RELEASE_NOTES.md` als Beschreibung verwenden und **`DICOM-Test-Tool.dmg`**, **`DICOM-Test-Tool.zip`** sowie **`DICOM-Test-Tool.zip.sha256`** anhängen. Die Dateinamen dürfen nicht geändert werden.
+1. Bump `VERSION` and add a `## <version>` section to `CHANGELOG.md`.
+2. Run `./release.sh`. It builds the app and creates the DMG, ZIP, `.sha256` and `dist/RELEASE_NOTES.md`.
+3. Create a GitHub release with tag `vX.Y.Z` and attach **`DICOM-Test-Tool.dmg`**, **`DICOM-Test-Tool.zip`** and **`DICOM-Test-Tool.zip.sha256`**. Do not rename these files.
 
-Die App fragt `https://api.github.com/repos/<owner>/<repo>/releases/latest` ab. Der Standard steht in `AppInfo.defaultRepository`; das Repository lässt sich unter *Über › Updates › GitHub-Repository* ändern.
-Zum Testen ohne GitHub zeigt `DICOMTESTTOOL_UPDATE_API=http://127.0.0.1:8765` auf einen lokalen Mock-Server.
+The app queries `https://api.github.com/repos/<owner>/<repo>/releases/latest`. The default is `AppInfo.defaultRepository`.
+For testing without GitHub, set `DICOMTESTTOOL_UPDATE_API=http://127.0.0.1:8765` to point it at a local mock server.
 
 </details>
 
 <details>
-<summary><b>Kommandozeile (<code>dicomcli</code>)</b></summary>
+<summary><b>Command line (<code>dicomcli</code>)</b></summary>
 
 ```
 dicomcli echo  <host> <port> <calledAE>
-dicomcli store <host> <port> <calledAE> <datei|ordner>...
-dicomcli find  <host> <port> <calledAE> [patientenname]
-dicomcli mwl   <host> <port> <calledAE> [patientenname]
-dicomcli move  <host> <port> <calledAE> <zielAE> <studyUID>
-dicomcli scp   <port> <aeTitel> <ordner>
-dicomcli testimage <ordner> [anzahl]
-dicomcli dump  <datei>
-dicomcli png   <datei> <ausgabe.png>
+dicomcli store <host> <port> <calledAE> <file|folder>...
+dicomcli find  <host> <port> <calledAE> [patientname]
+dicomcli mwl   <host> <port> <calledAE> [patientname]
+dicomcli move  <host> <port> <calledAE> <destinationAE> <studyUID>
+dicomcli scp   <port> <aeTitle> <folder>
+dicomcli testimage <folder> [count]
+dicomcli dump  <file>
+dicomcli png   <file> <output.png>
 ```
 
-Den Calling AE setzt die Umgebungsvariable `DICOM_AET` (Standard: `DICOMCLI`).
+The calling AE title is set with the environment variable `DICOM_AET` (default: `DICOMCLI`).
 
 </details>
 
 <details>
-<summary><b>Projektaufbau</b></summary>
+<summary><b>Project layout</b></summary>
 
-| Ordner | Inhalt |
+| Folder | Contents |
 |---|---|
-| `Sources/DicomCore` | DICOM-Implementierung: PDU, Assoziation, DIMSE, Datensätze, Part-10-Dateien, Bilddarstellung |
-| `Sources/DICOMTestTool` | SwiftUI-App |
-| `Sources/dicomcli` | Kommandozeilen-Werkzeug |
-| `Scripts` | Icon-Generator, DMG-Hintergrund und DMG-Erstellung |
+| `Sources/DicomCore` | DICOM implementation: PDUs, association, DIMSE, data sets, Part 10 files, image rendering |
+| `Sources/DICOMTestTool` | SwiftUI app |
+| `Sources/dicomcli` | Command-line tool |
+| `Scripts` | Icon generator, DMG background and DMG builder |
+| `docs` | Project website (GitHub Pages) |
 
 </details>
 
-## Lizenz
+## License
 
-[MIT](LICENSE) © 2026 Martin Senft, Brakel
+[MIT](LICENSE) © 2026 Martin Senft

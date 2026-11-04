@@ -169,7 +169,7 @@ struct TourPage {
                  tip: "Mit „Watchdog beim Start automatisch starten“ und „App bei Anmeldung öffnen“ läuft die Überwachung nach jedem Neustart.",
                  section: .watchdog),
         TourPage(icon: AppSection.viewer.icon, title: "Viewer / Tag-Dump",
-                 summary: "Zeigt alle Tags einer DICOM-Datei inklusive Sequenzen und das Bild mit Fensterung an.",
+                 summary: "Zeigt alle Tags einer DICOM-Datei inklusive Sequenzen und das Bild mit Fensterung an – zur technischen Kontrolle, nicht zur Befundung.",
                  steps: ["Über **Datei öffnen …** eine Datei laden oder sie ins Fenster ziehen.",
                          "Tags über das **Filterfeld** durchsuchen.",
                          "Im Bild mit gedrückter Maustaste ziehen, um **Fensterbreite und -mitte** zu ändern.",
@@ -183,6 +183,6 @@ struct TourPage {
                  section: .general),
         TourPage(icon: "checkmark.seal.fill", title: "Alles bereit",
                  summary: "Legen Sie als Erstes Ihre Knoten an und prüfen Sie die Verbindung mit einem Echo. Diese Tour finden Sie jederzeit wieder im Menüleisten-Menü unter **Einführung …** und unter **Über**.",
-                 tip: "Die App ist ein Testwerkzeug und nicht für diagnostische Zwecke bestimmt."),
+                 tip: "Die App ist ein Werkzeug für IT und Verbindungstests – kein Medizinprodukt und nicht für diagnostische Zwecke. Details stehen unter **Über › Zweckbestimmung**."),
     ]
 }
