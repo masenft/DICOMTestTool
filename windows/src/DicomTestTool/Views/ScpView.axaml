@@ -1,0 +1,70 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:DicomTestTool.ViewModels"
+             x:Class="DicomTestTool.Views.ScpView"
+             x:DataType="vm:AppState">
+  <DockPanel Margin="20,16">
+    <StackPanel DockPanel.Dock="Top" Spacing="12">
+      <StackPanel>
+        <TextBlock Classes="h1" Text="Storage SCP" />
+        <TextBlock Classes="secondary" Text="Empfängt Bilder (C-STORE) und beantwortet C-ECHO – z. B. als Ziel für C-MOVE oder zum Test von Modalitäten" />
+      </StackPanel>
+      <Border Classes="panel">
+        <WrapPanel IsEnabled="{Binding !ScpRunning}">
+          <StackPanel Spacing="2" Margin="0,0,14,4">
+            <TextBlock Classes="caption" Text="AE-Titel" />
+            <TextBox Width="150" Text="{Binding ScpAe}" MaxLength="16" />
+          </StackPanel>
+          <StackPanel Spacing="2" Margin="0,0,14,4">
+            <TextBlock Classes="caption" Text="Port" />
+            <TextBox Width="90" Text="{Binding ScpPort}" />
+          </StackPanel>
+          <StackPanel Spacing="2" Margin="0,0,14,4">
+            <TextBlock Classes="caption" Text="Speicherordner" />
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <TextBlock Text="{Binding ScpDirectory}" MaxWidth="380" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" ToolTip.Tip="{Binding ScpDirectory}" />
+              <Button Content="Ändern …" Click="OnChooseFolder" />
+            </StackPanel>
+          </StackPanel>
+          <CheckBox Content="Jeden Called AE akzeptieren" IsChecked="{Binding ScpAcceptAnyAe}" VerticalAlignment="Bottom" Margin="0,0,0,4" />
+        </WrapPanel>
+      </Border>
+      <DockPanel>
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
+          <TextBlock x:Name="CountText" Classes="secondary" VerticalAlignment="Center" />
+          <Button Content="Ordner öffnen" Click="OnOpenFolder" />
+          <Button Content="Liste leeren" Click="OnClear" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Button Classes="accent" Content="Starten" Click="OnStart" IsVisible="{Binding !ScpRunning}" />
+          <Button Content="Stoppen" Click="OnStop" IsVisible="{Binding ScpRunning}" />
+          <StackPanel Orientation="Horizontal" Spacing="6" IsVisible="{Binding ScpRunning}" VerticalAlignment="Center">
+            <Ellipse Width="10" Height="10" Fill="LimeGreen" />
+            <TextBlock Classes="ok" x:Name="RunningText" />
+          </StackPanel>
+          <TextBlock Text="Gestoppt" Classes="secondary" IsVisible="{Binding !ScpRunning}" VerticalAlignment="Center" />
+        </StackPanel>
+      </DockPanel>
+      <Border Classes="panel" Padding="10,8">
+        <DockPanel>
+          <Button DockPanel.Dock="Right" Content="Firewall-Befehl kopieren" Click="OnCopyFirewall" VerticalAlignment="Center" Margin="10,0,0,0"
+                  ToolTip.Tip="Kopiert einen netsh-Befehl, der in einer Eingabeaufforderung als Administrator die Freigabe einrichtet" />
+          <TextBlock Classes="caption" TextWrapping="Wrap"
+                     Text="Hinweis zur Windows-Firewall: Beim ersten Start fragt Windows, ob die App eingehende Verbindungen annehmen darf. Für den Empfang von anderen Geräten „Private Netzwerke“ (und ggf. „Domänennetzwerke“) erlauben – dafür sind Administratorrechte nötig. Ohne Freigabe funktioniert der Empfang nur vom selben PC (127.0.0.1)." />
+        </DockPanel>
+      </Border>
+    </StackPanel>
+    <DataGrid x:Name="Grid" Margin="0,10,0,0" x:DataType="vm:ReceivedRow">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Zeit" Binding="{Binding Time}" Width="80" />
+        <DataGridTextColumn Header="Von" Binding="{Binding From}" Width="2*" />
+        <DataGridTextColumn Header="Patient" Binding="{Binding Patient}" Width="2*" />
+        <DataGridTextColumn Header="ID" Binding="{Binding PatientId}" Width="*" />
+        <DataGridTextColumn Header="Mod." Binding="{Binding Modality}" Width="55" />
+        <DataGridTextColumn Header="SOP-Klasse" Binding="{Binding SopClass}" Width="2*" />
+        <DataGridTextColumn Header="Transfer Syntax" Binding="{Binding TransferSyntax}" Width="2*" />
+        <DataGridTextColumn Header="Größe" Binding="{Binding Size}" Width="80" />
+      </DataGrid.Columns>
+    </DataGrid>
+  </DockPanel>
+</UserControl>

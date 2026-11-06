@@ -21,10 +21,15 @@ struct GitHubRelease: Decodable, Identifiable {
     var version: String { Updater.normalize(tag_name) }
     var title: String { (name?.isEmpty == false ? name! : tag_name) }
 
-    /// The app archive: first .zip asset, preferring one named after the app.
+    /// The macOS app archive. Releases are shared with the Windows version, so only the
+    /// macOS archive name is accepted (plus a fallback that excludes Windows files).
+    static let macArchiveName = "DICOM-Test-Tool.zip"
     var zipAsset: Asset? {
-        let zips = assets.filter { $0.name.lowercased().hasSuffix(".zip") }
-        return zips.first { $0.name.lowercased().contains("dicom") } ?? zips.first
+        if let exact = assets.first(where: { $0.name == Self.macArchiveName }) { return exact }
+        return assets.first {
+            let n = $0.name.lowercased()
+            return n.hasSuffix(".zip") && n.contains("dicom") && !n.contains("win")
+        }
     }
 
     func checksumAsset(for zip: Asset) -> Asset? {
@@ -149,7 +154,8 @@ final class Updater: ObservableObject {
     }
 
     private func fetchNewestRelease() async throws -> GitHubRelease? {
-        let path = includePrereleases ? "releases?per_page=15" : "releases/latest"
+        // The list (not releases/latest) is used so that releases without a macOS archive are skipped.
+        let path = "releases?per_page=30"
         // DICOMTESTTOOL_UPDATE_API lets a local mock server stand in for GitHub during testing.
         let api = ProcessInfo.processInfo.environment["DICOMTESTTOOL_UPDATE_API"] ?? "https://api.github.com"
         guard let url = URL(string: "\(api)/repos/\(repository)/\(path)") else { return nil }
@@ -162,11 +168,9 @@ final class Updater: ObservableObject {
         guard code == 200 else { throw UpdateError.message("GitHub antwortete mit HTTP \(code)") }
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        if includePrereleases {
-            let all = try decoder.decode([GitHubRelease].self, from: data).filter { !$0.draft }
-            return all.max { Self.compare($0.version, $1.version) < 0 }
-        }
-        return try decoder.decode(GitHubRelease.self, from: data)
+        let all = try decoder.decode([GitHubRelease].self, from: data)
+            .filter { !$0.draft && ($0.zipAsset != nil) && (includePrereleases || !$0.prerelease) }
+        return all.max { Self.compare($0.version, $1.version) < 0 }
     }
 
     func skip() {

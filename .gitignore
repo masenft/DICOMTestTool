@@ -5,3 +5,8 @@ dist/
 xcuserdata/
 DerivedData/
 .DS_Store
+dist-win/
+windows/**/bin/
+windows/**/obj/
+windows/publish/
+windows/artifacts/

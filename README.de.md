@@ -78,6 +78,18 @@ Die Datei `DICOM-Test-Tool.zip` im Release wird von der eingebauten Update-Funkt
 
 **Systemvoraussetzungen:** macOS 14 (Sonoma) oder neuer, Apple Silicon oder Intel.
 
+## 🪟 Windows-Version (Vorabversion)
+
+Seit Version 1.4 gibt es das **DICOM Test Tool für Windows** mit denselben Werkzeugen (Echo, Store, Query/Retrieve, Worklist, Storage SCP, Watchdog, Viewer), Symbol im Infobereich, Windows-Benachrichtigungen und automatischen Updates. Der Viewer dekodiert zusätzlich JPEG Lossless, JPEG-LS und RLE.
+
+1. Im [Release v1.4.0-beta.1](https://github.com/masenft/DICOMTestTool/releases/tag/v1.4.0-beta.1) die Datei **`DICOM-Test-Tool-win-Setup.exe`** herunterladen und starten – ohne Administratorrechte.
+2. **Beim ersten Start** meldet Windows SmartScreen *„Der Computer wurde durch Windows geschützt“*, weil das Setup nicht signiert ist: auf **Weitere Informationen** › **Trotzdem ausführen** klicken.
+3. Die App erscheint im Startmenü als **DICOM Test Tool für Windows**. Für den Storage SCP fragt die Windows-Firewall beim ersten Start nach – **Private Netzwerke** erlauben (Administratorrechte nötig). Alternativ kopiert die SCP-Seite einen passenden `netsh`-Befehl.
+
+Die übrigen Dateien im Release (`.nupkg`, `releases.win.json`) braucht die Update-Funktion. Deinstallation über *Einstellungen › Apps*.
+
+**Systemvoraussetzungen:** Windows 10 (22H2) oder Windows 11, 64 Bit (x64).
+
 ## Updates
 
 Die App sucht einmal täglich automatisch nach neuen Versionen. Gibt es eine, öffnet sich ein Fenster mit den Neuerungen und dem Button **„Installieren und neu starten“**.
@@ -97,7 +109,7 @@ Unter *Update-Kanal* lässt sich wählen, ob nur **stabile Versionen** oder auch
 - **Zweckbestimmung:** Einrichten, Testen und Fehlersuche von DICOM-Netzwerkverbindungen durch IT, PACS-Administration und Medizintechnik.
 - **Kein Medizinprodukt, nicht für diagnostische Zwecke** – siehe Hinweis oben.
 - **Keine Zertifizierung:** Die Software ist weder von der NEMA noch von einer anderen Stelle zertifiziert oder geprüft und erhebt keinen Anspruch auf vollständige DICOM-Konformität. Ein DICOM Conformance Statement liegt nicht vor.
-- **Marken:** DICOM® ist eine eingetragene Marke der National Electrical Manufacturers Association (NEMA) für ihre Normen zur digitalen Kommunikation medizinischer Informationen. Die Nennung erfolgt nur beschreibend; es besteht keine Verbindung zur NEMA. macOS ist eine Marke von Apple Inc.
+- **Marken:** DICOM® ist eine eingetragene Marke der National Electrical Manufacturers Association (NEMA) für ihre Normen zur digitalen Kommunikation medizinischer Informationen. Die Nennung erfolgt nur beschreibend; es besteht keine Verbindung zur NEMA. macOS ist eine Marke von Apple Inc., Windows ist eine Marke der Microsoft Corporation.
 - **Privates Projekt:** Ein privates, nicht-kommerzielles Open-Source-Projekt unter der MIT-Lizenz, bereitgestellt **ohne jede Gewährleistung**.
 
 ## Erste Schritte
@@ -141,7 +153,7 @@ Beim ersten Bauen fragt macOS eventuell, ob das Terminal den Finder steuern darf
 
 1. Version in `VERSION` erhöhen und in `CHANGELOG.md` einen Abschnitt `## <Version>` anlegen.
 2. `./release.sh` ausführen: baut die App und erzeugt ZIP, `.sha256` und `dist/RELEASE_NOTES.md`.
-3. Auf GitHub ein Release mit dem Tag `vX.Y.Z` anlegen, den Inhalt von `RELEASE_NOTES.md` als Beschreibung verwenden und **`DICOM-Test-Tool.dmg`**, **`DICOM-Test-Tool.zip`** sowie **`DICOM-Test-Tool.zip.sha256`** anhängen. Die Dateinamen dürfen nicht geändert werden.
+3. `./release.sh` baut **macOS und Windows** und gibt den `gh release create`-Befehl mit allen Dateien aus. macOS- und Windows-Version erscheinen immer **im selben Release** mit derselben Versionsnummer. Die Dateinamen dürfen nicht geändert werden, und es darf kein weiteres `.zip` im Release liegen (ältere Mac-Versionen nehmen das erste ZIP mit „dicom“ im Namen).
 
 Die App fragt `https://api.github.com/repos/<owner>/<repo>/releases/latest` ab. Der Standard steht in `AppInfo.defaultRepository`; das Repository lässt sich unter *Über › Updates › GitHub-Repository* ändern.
 Zum Testen ohne GitHub zeigt `DICOMTESTTOOL_UPDATE_API=http://127.0.0.1:8765` auf einen lokalen Mock-Server.
@@ -175,6 +187,7 @@ Den Calling AE setzt die Umgebungsvariable `DICOM_AET` (Standard: `DICOMCLI`).
 | `Sources/DicomCore` | DICOM-Implementierung: PDU, Assoziation, DIMSE, Datensätze, Part-10-Dateien, Bilddarstellung |
 | `Sources/DICOMTestTool` | SwiftUI-App |
 | `Sources/dicomcli` | Kommandozeilen-Werkzeug |
+| `windows` | Windows-Version (.NET 10, Avalonia, fo-dicom) – siehe [windows/README.md](windows/README.md) |
 | `Scripts` | Icon-Generator, DMG-Hintergrund und DMG-Erstellung |
 | `docs` | Projekt-Website (GitHub Pages) |
 

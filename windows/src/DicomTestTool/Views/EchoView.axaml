@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:DicomTestTool.Controls"
+             x:Class="DicomTestTool.Views.EchoView">
+  <DockPanel Margin="20,16">
+    <StackPanel DockPanel.Dock="Top" Spacing="14">
+      <StackPanel>
+        <TextBlock Classes="h1" Text="C-ECHO" />
+        <TextBlock Classes="secondary" Text="Prüft Netzwerkverbindung, AE-Titel und Assoziationsaufbau (Verification SOP Class)" />
+      </StackPanel>
+      <c:NodePicker />
+      <StackPanel Orientation="Horizontal" Spacing="10">
+        <TextBlock Text="Wiederholungen:" VerticalAlignment="Center" />
+        <NumericUpDown x:Name="Repeat" Width="130" Minimum="1" Maximum="100" Value="1" FormatString="0" />
+        <Button x:Name="SendButton" Classes="accent" Content="Echo senden" Click="OnSend" HotKey="Ctrl+Enter" ToolTip.Tip="Strg+Eingabe" />
+        <ProgressBar x:Name="Busy" IsIndeterminate="True" Width="80" IsVisible="False" VerticalAlignment="Center" />
+        <Button Content="Ergebnisse leeren" Click="OnClear" />
+      </StackPanel>
+    </StackPanel>
+    <ListBox x:Name="Results" Margin="0,12,0,0" BorderBrush="{DynamicResource AppPanelBorder}" BorderThickness="1">
+      <ListBox.ItemTemplate>
+        <DataTemplate x:DataType="x:String">
+          <TextBlock Classes="mono" FontSize="12.5" Text="{Binding}" />
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>

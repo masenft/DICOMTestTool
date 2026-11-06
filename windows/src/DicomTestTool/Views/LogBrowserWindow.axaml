@@ -1,0 +1,30 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="DicomTestTool.Views.LogBrowserWindow"
+        Title="Protokolle &amp; Ordner" Width="900" Height="640" MinWidth="600" MinHeight="400"
+        Icon="/Assets/app.ico" WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource AppBackground}">
+  <DockPanel Margin="20">
+    <DockPanel DockPanel.Dock="Top" Margin="0,0,0,12">
+      <Button DockPanel.Dock="Right" Content="Fertig" IsDefault="True" IsCancel="True" Click="OnClose" />
+      <StackPanel>
+        <TextBlock Classes="h1" Text="Protokolle &amp; Ordner" />
+        <TextBlock Classes="secondary" Text="Log-Dateien der App und Speicherorte" />
+      </StackPanel>
+    </DockPanel>
+    <HeaderedContentControl DockPanel.Dock="Top" Classes="group" Header="Ordner" Margin="0,0,0,12">
+      <Grid x:Name="Folders" ColumnDefinitions="190,*,Auto" RowDefinitions="Auto,Auto,Auto" />
+    </HeaderedContentControl>
+    <TextBlock DockPanel.Dock="Top" FontWeight="SemiBold" Text="Log-Dateien (werden 30 Tage aufbewahrt)" Margin="0,0,0,6" />
+    <DockPanel DockPanel.Dock="Top" Margin="0,0,0,6">
+      <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="6">
+        <Button Content="Aktualisieren" Click="OnReload" />
+        <Button Content="Im Editor öffnen" Click="OnOpenFile" />
+        <Button Content="Im Explorer zeigen" Click="OnReveal" />
+        <Button Content="Alle löschen …" Click="OnDeleteAll" />
+      </StackPanel>
+      <ComboBox x:Name="Files" Width="380" />
+    </DockPanel>
+    <TextBox x:Name="LogText" IsReadOnly="True" AcceptsReturn="True" TextWrapping="NoWrap" FontFamily="{StaticResource MonoFont}" FontSize="12" />
+  </DockPanel>
+</Window>

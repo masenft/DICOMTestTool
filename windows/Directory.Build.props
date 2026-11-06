@@ -1,0 +1,19 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Version>$([System.IO.File]::ReadAllText('$(MSBuildThisFileDirectory)../VERSION').Trim())</Version>
+    <Authors>Martin Senft</Authors>
+    <Product>DICOM Test Tool für Windows</Product>
+    <Copyright>© 2026 Martin Senft – MIT-Lizenz</Copyright>
+    <NeutralLanguage>de-DE</NeutralLanguage>
+    <SatelliteResourceLanguages>de;en</SatelliteResourceLanguages>
+  </PropertyGroup>
+  <!-- On the Mac the repository lives in iCloud Drive: keep bin/obj out of it. -->
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX')) And '$(TMPDIR)' != ''">
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <ArtifactsPath>$(TMPDIR)DICOMTestTool-win-artifacts</ArtifactsPath>
+  </PropertyGroup>
+</Project>

@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.4.0-beta.1
+
+Vorabversion: erste Version für **Windows**.
+
+### Windows (neu)
+- **DICOM Test Tool für Windows** – dieselben Werkzeuge wie auf dem Mac: Knoten, Echo, Store (mit Testbildern), Query/Retrieve (C-FIND/C-MOVE), Worklist, Storage SCP, Watchdog und Viewer/Tag-Dump
+- Viewer dekodiert zusätzlich JPEG Lossless, JPEG-LS und RLE
+- Symbol im Infobereich mit Schnellzugriff (SCP, Watchdog, Echo), Windows-Benachrichtigungen, Start bei Anmeldung
+- Installation per Setup ohne Administratorrechte, automatische Updates über GitHub-Releases
+- Farbschemata „Standard (Windows)“ und „Klinik Dunkel“
+- Hinweise zu Datenschutz, Zweckbestimmung (nicht für diagnostische Zwecke) und Marken wie auf dem Mac
+
+### macOS
+- Update-Prüfung berücksichtigt nur Releases mit macOS-Archiv (`DICOM-Test-Tool.zip`); Windows-Dateien im selben Release werden ignoriert
+
 ## 1.3.0
 
 ### Neu

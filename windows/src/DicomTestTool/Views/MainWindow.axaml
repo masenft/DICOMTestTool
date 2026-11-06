@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DicomTestTool.ViewModels"
+        xmlns:c="using:DicomTestTool.Controls"
+        x:Class="DicomTestTool.Views.MainWindow"
+        x:DataType="vm:AppState"
+        Title="DICOM Test Tool für Windows"
+        Icon="/Assets/app.ico"
+        Width="1240" Height="840" MinWidth="1050" MinHeight="720"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource AppBackground}">
+  <Grid ColumnDefinitions="236,*">
+    <Border Background="{DynamicResource AppSidebar}" BorderBrush="{DynamicResource AppPanelBorder}" BorderThickness="0,0,1,0">
+      <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="16,16,16,10" Spacing="10">
+          <Image Source="/Assets/AppIcon-256.png" Width="34" Height="34" />
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="DICOM Test Tool" FontWeight="Bold" FontSize="15" />
+            <TextBlock Text="für Windows" Classes="caption" />
+          </StackPanel>
+        </StackPanel>
+        <ScrollViewer>
+          <StackPanel Margin="8,4,8,12" Spacing="2">
+            <TextBlock Text="Werkzeuge" Classes="caption" Margin="10,8,0,4" FontWeight="SemiBold" />
+            <ListBox x:Name="ToolList" Background="Transparent" SelectionMode="Single" />
+            <TextBlock Text="App" Classes="caption" Margin="10,14,0,4" FontWeight="SemiBold" />
+            <ListBox x:Name="AppList" Background="Transparent" SelectionMode="Single" />
+          </StackPanel>
+        </ScrollViewer>
+      </DockPanel>
+    </Border>
+    <Grid Grid.Column="1" x:Name="ContentGrid" RowDefinitions="*,Auto,190">
+      <ContentControl x:Name="ToolHost" Grid.Row="0" />
+      <GridSplitter Grid.Row="1" x:Name="LogSplitter" Height="5" ResizeDirection="Rows" Background="{DynamicResource AppPanelBorder}" />
+      <c:LogView Grid.Row="2" x:Name="LogPane" />
+    </Grid>
+  </Grid>
+</Window>
