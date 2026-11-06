@@ -8,6 +8,7 @@ public sealed class DicomNode
     public string Host { get; set; } = "";
     public int Port { get; set; } = 104;
 
+    [System.Text.Json.Serialization.JsonIgnore]
     public string Summary => $"{AeTitle}@{Host}:{Port}";
 
     public DicomNode Clone() => new() { Id = Id, Name = Name, AeTitle = AeTitle, Host = Host, Port = Port };

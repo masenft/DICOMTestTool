@@ -49,4 +49,21 @@ public class FormattingTests
         Assert.Equal(4242, l.ScpPort);
         Directory.Delete(dir, true);
     }
+
+    [Fact]
+    public void Settings_from_1_4_0_still_load()
+    {
+        var dir = Path.Combine(Path.GetTempPath(), "dtt-old-" + Guid.NewGuid().ToString("N"));
+        Environment.SetEnvironmentVariable("DICOMTESTTOOL_DATA_DIR", dir);
+        File.WriteAllText(SettingsStore.FilePath, """
+        { "nodes": [ { "Id": "7d1f0c1e-1111-4222-8333-944445555666", "Name": "PACS", "AeTitle": "PACS", "Host": "10.0.0.5", "Port": 104, "Summary": "PACS@10.0.0.5:104" } ],
+          "callingAE": "OLD_AE", "timeout": 20, "scpPort": 4100, "watchNodeIDs": [ "7d1f0c1e-1111-4222-8333-944445555666" ], "theme": "clinicalDark" }
+        """);
+        var s = SettingsStore.Load();
+        Assert.Equal("OLD_AE", s.CallingAe);
+        Assert.Equal("10.0.0.5", s.Nodes.Single().Host);
+        Assert.Single(s.WatchNodeIds);
+        Assert.Equal("clinicalDark", s.Theme);
+        Directory.Delete(dir, true);
+    }
 }

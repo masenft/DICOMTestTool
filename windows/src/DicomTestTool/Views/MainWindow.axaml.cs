@@ -58,16 +58,16 @@ public partial class MainWindow : Window
         UpdateDots();
     }
 
+    /// <summary>Sidebar row built in code without reflection bindings (safe for trimmed builds).</summary>
     private static FuncDataTemplate<SidebarEntry> EntryTemplate() => new((e, _) =>
     {
         var grid = new Grid { ColumnDefinitions = new ColumnDefinitions("26,*,Auto"), Margin = new Thickness(2, 3) };
-        grid.Children.Add(new TextBlock { Text = e?.Glyph, Classes = { "icon" }, Foreground = (IBrush?)Application.Current!.FindResource("SystemControlForegroundAccentBrush") ?? Brushes.DodgerBlue });
-        var title = new TextBlock { Text = e?.Title, VerticalAlignment = VerticalAlignment.Center, TextTrimming = TextTrimming.CharacterEllipsis };
+        if (e == null) return grid;
+        grid.Children.Add(new TextBlock { Text = e.Glyph, Classes = { "icon" }, Foreground = (IBrush?)Application.Current!.FindResource("SystemControlForegroundAccentBrush") ?? Brushes.DodgerBlue });
+        var title = new TextBlock { Text = e.Title, VerticalAlignment = VerticalAlignment.Center, TextTrimming = TextTrimming.CharacterEllipsis };
         Grid.SetColumn(title, 1);
         grid.Children.Add(title);
         var dot = new Avalonia.Controls.Shapes.Ellipse { Width = 8, Height = 8, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 2, 0) };
-        dot.Bind(IsVisibleProperty, new Avalonia.Data.Binding(nameof(SidebarEntry.ShowDot)));
-        dot.Bind(Avalonia.Controls.Shapes.Shape.FillProperty, new Avalonia.Data.Binding(nameof(SidebarEntry.DotBrush)));
         Grid.SetColumn(dot, 2);
         grid.Children.Add(dot);
         var badge = new Border
@@ -76,9 +76,16 @@ public partial class MainWindow : Window
             Child = new TextBlock { Text = "neu", Foreground = Brushes.White, FontSize = 11, FontWeight = FontWeight.Bold },
             VerticalAlignment = VerticalAlignment.Center,
         };
-        badge.Bind(IsVisibleProperty, new Avalonia.Data.Binding(nameof(SidebarEntry.ShowBadge)));
         Grid.SetColumn(badge, 2);
         grid.Children.Add(badge);
+        void Sync()
+        {
+            dot.IsVisible = e.ShowDot;
+            dot.Fill = e.DotBrush;
+            badge.IsVisible = e.ShowBadge;
+        }
+        Sync();
+        e.PropertyChanged += (_, _) => Sync();
         return grid;
     }, supportsRecycling: false);
 

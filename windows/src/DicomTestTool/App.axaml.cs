@@ -40,6 +40,17 @@ public partial class App : Application
             };
             SingleInstance.ListenForShowRequests(() => Dispatcher.UIThread.Post(() => ShowMain()));
             desktop.ShutdownRequested += (_, _) => state.PrepareForShutdown();
+            if (UiTest.Enabled)
+            {
+                Dispatcher.UIThread.Post(async () =>
+                {
+                    var code = await UiTest.RunAsync(_window);
+                    state.PrepareForShutdown();
+                    desktop.Shutdown(code);
+                });
+                base.OnFrameworkInitializationCompleted();
+                return;
+            }
             state.DidFinishLaunching();
         }
         base.OnFrameworkInitializationCompleted();
@@ -62,44 +73,55 @@ public partial class App : Application
         _desktop?.Shutdown();
     }
 
+    private NativeMenuItem? _scpItem, _watchItem;
+    private NativeMenu? _echoMenu;
+    private bool _trayBuilt;
+
+    /// <summary>Builds the tray menu once and afterwards only updates it (replacing the menu crashes on some platforms).</summary>
     private void SetupTray(AppState state)
     {
         var icons = TrayIcon.GetIcons(this);
         if (icons == null || icons.Count == 0) return;
         var tray = icons[0];
         tray.IsVisible = state.ShowTrayIcon;
-        tray.Clicked -= OnTrayClicked;
-        tray.Clicked += OnTrayClicked;
-
-        var menu = new NativeMenu();
-        menu.Add(new NativeMenuItem($"{AppInfo.Name} {AppInfo.Version}") { IsEnabled = false });
-        menu.Add(new NativeMenuItemSeparator());
-        menu.Add(Item(state.ScpRunning ? $"Storage SCP stoppen (Port {state.ScpPort})" : "Storage SCP starten",
-            () => { if (state.ScpRunning) state.StopScp(); else state.StartScp(); }));
-        menu.Add(Item(state.WatchRunning ? $"Watchdog stoppen ({state.WatchSummary})" : "Watchdog starten",
-            () => { if (state.WatchRunning) state.StopWatchdog(); else state.StartWatchdog(); }, enabled: state.WatchRunning || state.Nodes.Any(n => n.Watched)));
-        var echo = new NativeMenuItem("Echo senden an") { Menu = new NativeMenu() };
-        if (state.Nodes.Count == 0) echo.Menu.Add(new NativeMenuItem("Keine Knoten angelegt") { IsEnabled = false });
+        if (!_trayBuilt)
+        {
+            _trayBuilt = true;
+            tray.Clicked += OnTrayClicked;
+            var menu = new NativeMenu();
+            menu.Add(new NativeMenuItem($"{AppInfo.Name} {AppInfo.Version}") { IsEnabled = false });
+            menu.Add(new NativeMenuItemSeparator());
+            _scpItem = Item("", () => { if (state.ScpRunning) state.StopScp(); else state.StartScp(); });
+            _watchItem = Item("", () => { if (state.WatchRunning) state.StopWatchdog(); else state.StartWatchdog(); });
+            menu.Add(_scpItem);
+            menu.Add(_watchItem);
+            _echoMenu = new NativeMenu();
+            menu.Add(new NativeMenuItem("Echo senden an") { Menu = _echoMenu });
+            menu.Add(new NativeMenuItemSeparator());
+            foreach (var (title, section) in new[]
+                     {
+                         ("Knoten & Einstellungen", AppSection.Nodes), ("Echo", AppSection.Echo), ("Store (Senden)", AppSection.Store),
+                         ("Query / Retrieve", AppSection.Find), ("Worklist", AppSection.Worklist), ("Storage SCP", AppSection.Scp),
+                         ("Watchdog", AppSection.Watchdog), ("Viewer / Tag-Dump", AppSection.Viewer),
+                     })
+                menu.Add(Item(title + " …", () => ShowMain(section)));
+            menu.Add(new NativeMenuItemSeparator());
+            menu.Add(Item("Allgemein …", () => ShowMain(AppSection.General)));
+            menu.Add(Item("Nach Updates suchen …", () => { ShowMain(AppSection.About); _ = state.Updater.CheckAsync(userInitiated: true); }));
+            menu.Add(new NativeMenuItemSeparator());
+            menu.Add(Item($"{AppInfo.Name} beenden", Quit));
+            tray.Menu = menu;
+        }
+        _scpItem!.Header = state.ScpRunning ? $"Storage SCP stoppen (Port {state.ScpPort})" : "Storage SCP starten";
+        _watchItem!.Header = state.WatchRunning ? $"Watchdog stoppen ({state.WatchSummary})" : "Watchdog starten";
+        _watchItem.IsEnabled = state.WatchRunning || state.Nodes.Any(n => n.Watched);
+        _echoMenu!.Items.Clear();
+        if (state.Nodes.Count == 0) _echoMenu.Add(new NativeMenuItem("Keine Knoten angelegt") { IsEnabled = false });
         foreach (var n in state.Nodes)
         {
             var node = n;
-            echo.Menu.Add(Item($"{node.Name}  ({node.Summary})", () => _ = state.QuickEchoAsync(node)));
+            _echoMenu.Add(Item($"{node.Name}  ({node.Summary})", () => _ = state.QuickEchoAsync(node)));
         }
-        menu.Add(echo);
-        menu.Add(new NativeMenuItemSeparator());
-        foreach (var (title, section) in new[]
-                 {
-                     ("Knoten & Einstellungen", AppSection.Nodes), ("Echo", AppSection.Echo), ("Store (Senden)", AppSection.Store),
-                     ("Query / Retrieve", AppSection.Find), ("Worklist", AppSection.Worklist), ("Storage SCP", AppSection.Scp),
-                     ("Watchdog", AppSection.Watchdog), ("Viewer / Tag-Dump", AppSection.Viewer),
-                 })
-            menu.Add(Item(title + " …", () => ShowMain(section)));
-        menu.Add(new NativeMenuItemSeparator());
-        menu.Add(Item("Allgemein …", () => ShowMain(AppSection.General)));
-        menu.Add(Item("Nach Updates suchen …", () => { ShowMain(AppSection.About); _ = state.Updater.CheckAsync(userInitiated: true); }));
-        menu.Add(new NativeMenuItemSeparator());
-        menu.Add(Item($"{AppInfo.Name} beenden", Quit));
-        tray.Menu = menu;
     }
 
     private void OnTrayClicked(object? sender, EventArgs e) => ShowMain();
