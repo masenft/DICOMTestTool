@@ -21,7 +21,7 @@ public partial class EchoView : UserControl
     {
         if (_state.SelectedNode is not { } item || !SendButton.IsEnabled) return;
         SendButton.IsEnabled = false;
-        Busy.IsVisible = true;
+        Busy.IsVisible = Busy.IsIndeterminate = true;
         var node = item.ToNode();
         var n = (int)(Repeat.Value ?? 1);
         var ok = 0;
@@ -43,7 +43,7 @@ public partial class EchoView : UserControl
             _results.Insert(0, line);
         }
         if (n > 1) _results.Insert(0, $"Ergebnis: {ok}/{n} erfolgreich");
-        Busy.IsVisible = false;
+        Busy.IsVisible = Busy.IsIndeterminate = false;
         SendButton.IsEnabled = true;
     }
 

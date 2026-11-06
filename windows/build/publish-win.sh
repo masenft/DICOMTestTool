@@ -12,11 +12,14 @@ TFM="net10.0-windows10.0.19041.0"
 WORK="${TMPDIR:-/tmp}/DICOMTestTool-win-$RID"
 OUT="../dist-win"
 
-rm -rf "$WORK" "$OUT" && mkdir -p "$WORK/publish" "$OUT"
+rm -rf "$WORK" "$OUT" && mkdir -p "$WORK/publish" "$WORK/portable" "$OUT"
 dotnet tool restore >/dev/null
 dotnet test tests/DicomTestTool.Core.Tests -c Release --nologo -v q
+# Installed version: a normal folder (fastest start, no self-extraction); portable: one EXE.
 dotnet publish src/DicomTestTool -c Release -f "$TFM" -r "$RID" --self-contained \
-  -p:PublishSingleFile=true -o "$WORK/publish" --nologo -v q
+  -p:PublishSingleFile=false -o "$WORK/publish" --nologo -v q
+dotnet publish src/DicomTestTool -c Release -f "$TFM" -r "$RID" --self-contained \
+  -p:PublishSingleFile=true -o "$WORK/portable" --nologo -v q
 
 # Release notes: the "## <version>" section of CHANGELOG.md
 awk -v v="## $VERSION" '$0==v{f=1;next} /^## /{f=0} f' ../CHANGELOG.md > "$WORK/notes.md"
@@ -34,7 +37,7 @@ cp "$WORK/releases/"*.nupkg "$WORK/releases/releases.win.json" "$OUT/"
 [[ -f "$WORK/releases/assets.win.json" ]] && cp "$WORK/releases/assets.win.json" "$OUT/"
 [[ -f "$WORK/releases/RELEASES" ]] && cp "$WORK/releases/RELEASES" "$OUT/"
 # Portable exe: runs without installation (no automatic updates). Part of the release – an .exe, not a .zip.
-cp "$WORK/publish/DICOMTestTool.exe" "$OUT/DICOM-Test-Tool-win-portable.exe"
+cp "$WORK/portable/DICOMTestTool.exe" "$OUT/DICOM-Test-Tool-win-portable.exe"
 cp "$WORK/notes.md" "$OUT/RELEASE_NOTES.md"
 (cd "$OUT" && shasum -a 256 DICOM-Test-Tool-win-Setup.exe > DICOM-Test-Tool-win-Setup.exe.sha256 \
   && shasum -a 256 DICOM-Test-Tool-win-portable.exe > DICOM-Test-Tool-win-portable.exe.sha256)

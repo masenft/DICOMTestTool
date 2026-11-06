@@ -203,7 +203,8 @@ public partial class FindView : UserControl
 
     private void SetBusy(bool busy)
     {
-        Busy.IsVisible = busy;
+        // An indeterminate ProgressBar animates (and redraws) even while hidden – only switch it on while busy.
+        Busy.IsVisible = Busy.IsIndeterminate = busy;
         CancelButton.IsVisible = busy;
         FindButton.IsVisible = !busy;
         UpdateButtons();

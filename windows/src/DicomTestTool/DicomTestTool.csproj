@@ -12,8 +12,11 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <AssemblyTitle>DICOM Test Tool für Windows</AssemblyTitle>
+    <!-- Fast start: precompiled code (ReadyToRun) instead of JIT at every launch; no single-file compression
+         (decompressing ~130 MB on every start made the portable EXE take 30–60 s). -->
+    <PublishReadyToRun Condition="'$(RuntimeIdentifier)' != ''">true</PublishReadyToRun>
+    <TieredPGO>true</TieredPGO>
     <NoWarn>$(NoWarn);MVVMTK0045;CA1416</NoWarn>
   </PropertyGroup>
   <ItemGroup>
