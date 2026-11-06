@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.4.2
+
+### Windows
+- Deutlich kleiner: portable Version 88 MB statt 205 MB, Setup 46 MB statt 73 MB, installiert 82 MB statt 152 MB (ungenutzter Code wird beim Bauen entfernt)
+- Noch schnellerer Start und weniger Arbeitsspeicher
+- Behoben: Das Menü des Symbols im Infobereich wurde bei jeder Statusänderung neu erzeugt; jetzt wird es nur aktualisiert
+- Interner UI-Test, der bei jedem Build unter Windows alle Seiten und Dialoge prüft
+
+### macOS
+- Keine Änderungen (gemeinsames Release mit Windows)
+
 ## 1.4.1
 
 ### Windows
