@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.1
+
+### Windows
+- Deutlich schnellerer Start: vorkompilierter Code (ReadyToRun) und keine komprimierte Einzeldatei mehr – im Test unter Windows rund dreimal schneller bis zum Fenster, rund 40 % weniger Arbeitsspeicher
+- Weniger Prozessorlast im Leerlauf: ausgeblendete Fortschrittsanzeigen (Echo, Query/Retrieve, Worklist, Updates) animierten im Hintergrund weiter
+- Die installierte Version liegt jetzt als normaler Programmordner vor (kein Entpacken bei jedem Start)
+
+### macOS
+- Keine Änderungen (gemeinsames Release mit Windows)
+
 ## 1.4.0
 
 Erste Version für **Windows**.
