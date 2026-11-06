@@ -73,7 +73,7 @@ public partial class WorklistView : UserControl
         CountText.Text = "0 Einträge";
         _running = true;
         QueryButton.IsEnabled = false;
-        Busy.IsVisible = true;
+        Busy.IsVisible = Busy.IsIndeterminate = true;
         try
         {
             await Task.Run(() => DicomScu.FindAsync(item.ToNode(), _state.ScuSettings, DicomNames.ModalityWorklistFind, q,
@@ -86,6 +86,6 @@ public partial class WorklistView : UserControl
         }
         _running = false;
         QueryButton.IsEnabled = true;
-        Busy.IsVisible = false;
+        Busy.IsVisible = Busy.IsIndeterminate = false;
     }
 }
