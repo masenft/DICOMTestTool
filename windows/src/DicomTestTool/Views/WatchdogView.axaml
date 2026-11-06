@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:DicomTestTool.ViewModels"
+             x:Class="DicomTestTool.Views.WatchdogView"
+             x:DataType="vm:AppState">
+  <DockPanel Margin="20,16">
+    <StackPanel DockPanel.Dock="Top" Spacing="12">
+      <StackPanel>
+        <TextBlock Classes="h1" Text="Watchdog" />
+        <TextBlock Classes="secondary" Text="Sendet regelmäßig C-ECHO an ausgewählte Knoten und meldet Ausfälle per Windows-Benachrichtigung" />
+      </StackPanel>
+      <DockPanel>
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="10">
+          <StackPanel Orientation="Horizontal" Spacing="6" IsVisible="{Binding WatchRunning}" VerticalAlignment="Center">
+            <Ellipse Width="10" Height="10" Fill="LimeGreen" />
+            <TextBlock Classes="ok" Text="Überwachung aktiv" />
+            <TextBlock Classes="secondary" Text="{Binding WatchSummary}" />
+          </StackPanel>
+          <Button Classes="accent" Content="Starten" Click="OnStart" IsVisible="{Binding !WatchRunning}" />
+          <Button Content="Stoppen" Click="OnStop" IsVisible="{Binding WatchRunning}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="Intervall:" VerticalAlignment="Center" />
+          <NumericUpDown Width="130" Minimum="5" Maximum="86400" Increment="5" FormatString="0" Value="{Binding WatchInterval}" />
+          <TextBlock Text="Sekunden" VerticalAlignment="Center" />
+          <TextBlock Classes="caption" VerticalAlignment="Center" Margin="12,0,0,0" Text="Haken setzen = Knoten überwachen" />
+        </StackPanel>
+      </DockPanel>
+    </StackPanel>
+    <DataGrid x:Name="Grid" Margin="0,10,0,0" IsReadOnly="False" x:DataType="vm:NodeItem">
+      <DataGrid.Columns>
+        <DataGridTemplateColumn Header="" Width="44">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate x:DataType="vm:NodeItem">
+              <CheckBox IsChecked="{Binding Watched}" HorizontalAlignment="Center" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn Header="Knoten" Binding="{Binding Name}" Width="2*" IsReadOnly="True" />
+        <DataGridTextColumn Header="Adresse" Binding="{Binding Summary}" Width="2*" IsReadOnly="True" />
+        <DataGridTemplateColumn Header="Status" Width="100">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate x:DataType="vm:NodeItem">
+              <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center" Margin="8,0">
+                <Ellipse Width="10" Height="10" Fill="{Binding StatusBrush}" />
+                <TextBlock Text="{Binding StatusText}" />
+              </StackPanel>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn Header="Letzte Prüfung" Binding="{Binding LastCheck}" Width="125" IsReadOnly="True" />
+        <DataGridTextColumn Header="Antwortzeit" Binding="{Binding Latency}" Width="95" IsReadOnly="True" />
+        <DataGridTextColumn Header="Fehler in Folge" Binding="{Binding Failures}" Width="115" IsReadOnly="True" />
+        <DataGridTextColumn Header="Meldung" Binding="{Binding Message}" Width="3*" IsReadOnly="True" />
+      </DataGrid.Columns>
+    </DataGrid>
+  </DockPanel>
+</UserControl>

@@ -1,0 +1,73 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:DicomTestTool.Controls"
+             xmlns:v="using:DicomTestTool.Views"
+             x:Class="DicomTestTool.Views.StoreView"
+             DragDrop.AllowDrop="True">
+  <DockPanel Margin="20,16">
+    <StackPanel DockPanel.Dock="Top" Spacing="12">
+      <StackPanel>
+        <TextBlock Classes="h1" Text="C-STORE" />
+        <TextBlock Classes="secondary" Text="Sendet DICOM-Dateien oder ganze Ordner an die Gegenstelle (Dateien hierher ziehen)" />
+      </StackPanel>
+      <c:NodePicker />
+      <HeaderedContentControl Classes="group" Header="Testbilder erzeugen (Secondary Capture, 512×512, 12 Bit, ohne echte Patientendaten)">
+        <WrapPanel Orientation="Horizontal">
+          <StackPanel Spacing="2" Margin="0,0,12,4">
+            <TextBlock Classes="caption" Text="Patientenname (NACHNAME^VORNAME)" />
+            <TextBox x:Name="PatName" Width="210" Text="TEST^PATIENT" />
+          </StackPanel>
+          <StackPanel Spacing="2" Margin="0,0,12,4">
+            <TextBlock Classes="caption" Text="Patienten-ID" />
+            <TextBox x:Name="PatId" Width="120" Text="TEST0001" />
+          </StackPanel>
+          <c:DateField x:Name="BirthDate" Label="Geburtsdatum" Value="19700101" Margin="0,0,12,4" />
+          <StackPanel Spacing="2" Margin="0,0,12,4">
+            <TextBlock Classes="caption" Text="Accession" />
+            <TextBox x:Name="Accession" Width="110" />
+          </StackPanel>
+          <StackPanel Spacing="2" Margin="0,0,12,4">
+            <TextBlock Classes="caption" Text="Modalität" />
+            <TextBox x:Name="Modality" Width="60" Text="OT" />
+          </StackPanel>
+          <StackPanel Spacing="2" Margin="0,0,12,4">
+            <TextBlock Classes="caption" Text="Anzahl" />
+            <NumericUpDown x:Name="Count" Width="120" Minimum="1" Maximum="500" Value="1" FormatString="0" />
+          </StackPanel>
+          <Button Content="Erzeugen" VerticalAlignment="Bottom" Margin="0,0,0,4" Click="OnGenerate" />
+        </WrapPanel>
+      </HeaderedContentControl>
+      <DockPanel>
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
+          <TextBlock x:Name="CountText" Classes="secondary" VerticalAlignment="Center" Text="0 Datei(en)" />
+          <ProgressBar x:Name="Progress" Width="160" Minimum="0" Maximum="1" IsVisible="False" VerticalAlignment="Center" />
+          <Button x:Name="CancelButton" Content="Abbrechen" IsVisible="False" Click="OnCancel" />
+          <Button x:Name="SendButton" Classes="accent" Content="Senden" Click="OnSend" HotKey="Ctrl+Enter" ToolTip.Tip="Strg+Eingabe" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <Button Content="Dateien hinzufügen …" Click="OnAddFiles" />
+          <Button Content="Ordner hinzufügen …" Click="OnAddFolder" />
+          <Button x:Name="ClearButton" Content="Liste leeren" Click="OnClearList" />
+        </StackPanel>
+      </DockPanel>
+    </StackPanel>
+    <Panel Margin="0,10,0,0">
+      <DataGrid x:Name="Grid" x:DataType="v:StoreFileRow">
+        <DataGrid.Columns>
+          <DataGridTemplateColumn Header="" Width="34">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate x:DataType="v:StoreFileRow">
+                <TextBlock Text="{Binding Symbol}" Foreground="{Binding SymbolBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTextColumn Header="Datei" Binding="{Binding FileName}" Width="2*" />
+          <DataGridTextColumn Header="Ordner" Binding="{Binding Folder}" Width="3*" />
+          <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="2*" />
+        </DataGrid.Columns>
+      </DataGrid>
+      <TextBlock x:Name="DropHint" Text="DICOM-Dateien oder Ordner hierher ziehen" Classes="secondary" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" />
+      <Border x:Name="DropBorder" BorderBrush="{DynamicResource SystemControlHighlightAccentBrush}" BorderThickness="2" IsVisible="False" IsHitTestVisible="False" />
+    </Panel>
+  </DockPanel>
+</UserControl>

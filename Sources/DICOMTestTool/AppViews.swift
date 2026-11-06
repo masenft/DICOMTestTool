@@ -272,7 +272,7 @@ struct AboutView: View {
                             TextField("owner/repository", text: $updater.repository).textFieldStyle(.roundedBorder).frame(width: 280)
                             if let u = updater.repositoryURL { Link("Öffnen", destination: u) }
                         }
-                        Text("Abgefragt wird die GitHub Releases API. Ein Release muss ein ZIP mit „\(AppInfo.name).app“ enthalten, optional mit .sha256-Prüfsumme.")
+                        Text("Abgefragt wird die GitHub Releases API. Ein Release muss „DICOM-Test-Tool.zip“ mit „\(AppInfo.name).app“ enthalten, optional mit .sha256-Prüfsumme. Releases ohne macOS-Archiv (z. B. nur für Windows) werden übersprungen.")
                             .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                     }
                     .padding(.top, 6)

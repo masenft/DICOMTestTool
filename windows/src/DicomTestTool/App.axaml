@@ -1,0 +1,48 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="DicomTestTool.App"
+             Name="DICOM Test Tool für Windows"
+             RequestedThemeVariant="Default">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+          <SolidColorBrush x:Key="AppBackground" Color="#FFFFFF" />
+          <SolidColorBrush x:Key="AppSidebar" Color="#F3F3F3" />
+          <SolidColorBrush x:Key="AppPanel" Color="#F7F7F7" />
+          <SolidColorBrush x:Key="AppPanelBorder" Color="#E0E0E0" />
+          <SolidColorBrush x:Key="AppLogBackground" Color="#FBFBFB" />
+          <SolidColorBrush x:Key="AppSecondaryText" Color="#5F5F5F" />
+          <SolidColorBrush x:Key="AppWarningText" Color="#B35900" />
+          <SolidColorBrush x:Key="AppErrorText" Color="#C42B1C" />
+          <SolidColorBrush x:Key="AppOkText" Color="#0F7B0F" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+          <SolidColorBrush x:Key="AppBackground" Color="#202020" />
+          <SolidColorBrush x:Key="AppSidebar" Color="#1A1A1A" />
+          <SolidColorBrush x:Key="AppPanel" Color="#2B2B2B" />
+          <SolidColorBrush x:Key="AppPanelBorder" Color="#3D3D3D" />
+          <SolidColorBrush x:Key="AppLogBackground" Color="#1C1C1C" />
+          <SolidColorBrush x:Key="AppSecondaryText" Color="#ABABAB" />
+          <SolidColorBrush x:Key="AppWarningText" Color="#FFA94D" />
+          <SolidColorBrush x:Key="AppErrorText" Color="#FF6B6B" />
+          <SolidColorBrush x:Key="AppOkText" Color="#6CCB5F" />
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+      <FontFamily x:Key="IconFont">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+      <FontFamily x:Key="MonoFont">Cascadia Mono, Consolas, Menlo, monospace</FontFamily>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Styles>
+    <FluentTheme />
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+    <StyleInclude Source="avares://DICOMTestTool/Styles.axaml" />
+  </Application.Styles>
+
+  <TrayIcon.Icons>
+    <TrayIcons>
+      <TrayIcon Icon="/Assets/app.ico" ToolTipText="DICOM Test Tool für Windows" />
+    </TrayIcons>
+  </TrayIcon.Icons>
+</Application>

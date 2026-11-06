@@ -1,0 +1,85 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:s="using:DicomTestTool.Services"
+             x:Class="DicomTestTool.Views.AboutView"
+             x:DataType="s:UpdateService">
+  <StackPanel Margin="24,18" Spacing="20" MaxWidth="1000" HorizontalAlignment="Left">
+    <!-- Header -->
+    <StackPanel Orientation="Horizontal" Spacing="20">
+      <Image Source="/Assets/AppIcon-256.png" Width="96" Height="96" VerticalAlignment="Top" />
+      <StackPanel Spacing="4" MaxWidth="820">
+        <TextBlock Text="DICOM Test Tool für Windows" FontSize="28" FontWeight="Bold" />
+        <TextBlock x:Name="VersionText" Classes="secondary" />
+        <TextBlock TextWrapping="Wrap" Text="Testen und Fehlersuche von DICOM-Verbindungen: Echo, Store, Query/Retrieve, Worklist, Storage SCP, Watchdog und Viewer." />
+        <StackPanel Orientation="Horizontal" Spacing="14" Margin="0,2,0,0">
+          <TextBlock Text="Martin Senft – Entwickler, Brakel, Deutschland" Classes="secondary" VerticalAlignment="Center" />
+          <Button Content="Quellcode auf GitHub" Click="OnGitHub" Classes="accent" Padding="10,3" />
+          <Button Content="Website" Click="OnWebsite" Padding="10,3" />
+        </StackPanel>
+        <TextBlock Classes="caption" TextWrapping="Wrap" Text="Privates, nicht-kommerzielles Open-Source-Projekt unter MIT-Lizenz · Werkzeug für IT und Verbindungstests – nicht für diagnostische Zwecke." />
+      </StackPanel>
+    </StackPanel>
+    <Separator />
+    <!-- Updates -->
+    <Border Classes="panel" Padding="18">
+      <StackPanel Spacing="12">
+        <DockPanel>
+          <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+            <ProgressBar IsIndeterminate="True" Width="60" IsVisible="{Binding IsChecking}" />
+            <Button Content="Nach Updates suchen …" Click="OnCheck" IsEnabled="{Binding !IsChecking}" />
+          </StackPanel>
+          <StackPanel>
+            <TextBlock Text="Updates" FontSize="18" FontWeight="Bold" />
+            <TextBlock Classes="secondary" Text="{Binding Subtitle}" />
+          </StackPanel>
+        </DockPanel>
+        <DockPanel IsVisible="{Binding AvailableVersion, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <Button DockPanel.Dock="Right" Classes="accent" Content="Neuerungen anzeigen und installieren …" Click="OnShowRelease" />
+          <TextBlock FontWeight="Bold" Foreground="{DynamicResource SystemControlForegroundAccentBrush}" VerticalAlignment="Center"
+                     Text="{Binding AvailableVersion, StringFormat='Version {0} ist verfügbar'}" />
+        </DockPanel>
+        <TextBlock Classes="secondary" TextWrapping="Wrap" Text="{Binding StatusText}" IsVisible="{Binding StatusText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        <StackPanel Orientation="Horizontal" Spacing="12">
+          <TextBlock Text="Update-Kanal" VerticalAlignment="Center" />
+          <RadioButton GroupName="channel" Content="Stabil" IsChecked="{Binding !IncludePrereleases}" />
+          <RadioButton GroupName="channel" Content="Vorabversionen" IsChecked="{Binding IncludePrereleases}" />
+        </StackPanel>
+        <TextBlock Classes="caption" TextWrapping="Wrap" Text="{Binding ChannelHint}" />
+        <ToggleSwitch OnContent="Automatisch nach Updates suchen (einmal täglich)" OffContent="Automatisch nach Updates suchen (einmal täglich)" IsChecked="{Binding AutoCheck}" />
+        <TextBlock Classes="caption" TextWrapping="Wrap" Text="Wenn eine neue Version erscheint, sehen Sie ein Fenster mit den Neuerungen. Installiert wird erst, wenn Sie auf „Installieren und neu starten“ klicken. Updates kommen von den GitHub-Releases des Projekts und funktionieren nur in der installierten Version." />
+        <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding HasSkippedVersion}">
+          <TextBlock VerticalAlignment="Center" Text="{Binding SkippedVersion, StringFormat='Übersprungene Version: {0}'}" />
+          <Button Content="Wieder anbieten" Click="OnUnskip" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+    <!-- Privacy -->
+    <Border Classes="panel" Padding="18">
+      <StackPanel Spacing="10">
+        <TextBlock Text="Datenschutz" FontSize="18" FontWeight="Bold" />
+        <TextBlock Classes="secondary" Text="Keine Telemetrie, keine Werbung, kein Konto – Ihre Daten bleiben auf diesem PC." />
+        <StackPanel x:Name="PrivacyRows" Spacing="10" />
+      </StackPanel>
+    </Border>
+    <!-- Intended use -->
+    <Border Classes="panel" Padding="18">
+      <StackPanel Spacing="10">
+        <TextBlock Text="Zweckbestimmung &amp; rechtliche Hinweise" FontSize="18" FontWeight="Bold" />
+        <TextBlock Classes="secondary" Text="Ein Werkzeug für die IT – kein Medizinprodukt." />
+        <StackPanel x:Name="LegalRows" Spacing="10" />
+        <Button Content="Lizenzen der verwendeten Bibliotheken anzeigen …" Click="OnLicenses" />
+      </StackPanel>
+    </Border>
+    <!-- Data & reset -->
+    <StackPanel Spacing="10">
+      <TextBlock Text="Daten &amp; Zurücksetzen" FontSize="20" FontWeight="Bold" />
+      <TextBlock Classes="secondary" TextWrapping="Wrap" Text="Setzt die App in den Ausgangszustand zurück: Alle Einstellungen, Knoten, SCP-, Watchdog- und Update-Optionen werden auf Standard gesetzt. Empfangene DICOM-Dateien und Log-Dateien bleiben erhalten." />
+      <WrapPanel>
+        <Button Content="App-Datenordner öffnen" Click="OnDataFolder" Margin="0,0,8,6" />
+        <Button Content="Empfangsordner öffnen" Click="OnReceiveFolder" Margin="0,0,8,6" />
+        <Button Content="Protokolle anzeigen" Click="OnLogs" Margin="0,0,8,6" />
+        <Button Content="Alles auf Standard zurücksetzen" Click="OnReset" Margin="0,0,8,6" Foreground="{DynamicResource AppErrorText}" />
+      </WrapPanel>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

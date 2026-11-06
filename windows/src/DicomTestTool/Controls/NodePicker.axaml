@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:DicomTestTool.ViewModels"
+             x:Class="DicomTestTool.Controls.NodePicker"
+             x:DataType="vm:AppState">
+  <DockPanel>
+    <TextBlock DockPanel.Dock="Right" Classes="secondary" VerticalAlignment="Center" Text="{Binding CallingAe, StringFormat='Calling AE: {0}'}" />
+    <StackPanel Orientation="Horizontal" Spacing="8">
+      <TextBlock Text="Ziel" VerticalAlignment="Center" />
+      <ComboBox ItemsSource="{Binding Nodes}" SelectedItem="{Binding SelectedNode}" Width="480" PlaceholderText="Bitte unter „Knoten &amp; Einstellungen“ einen Knoten anlegen">
+        <ComboBox.ItemTemplate>
+          <DataTemplate x:DataType="vm:NodeItem">
+            <TextBlock Text="{Binding Display}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+      <Button ToolTip.Tip="Knoten bearbeiten" Click="OnEdit">
+        <TextBlock Classes="icon" Text="&#xE70F;" FontSize="14" />
+      </Button>
+    </StackPanel>
+  </DockPanel>
+</UserControl>

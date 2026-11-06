@@ -1,0 +1,39 @@
+name: Windows
+
+on:
+  push:
+    branches: [main, windows]
+    paths: ["windows/**", "VERSION", "CHANGELOG.md", ".github/workflows/windows.yml"]
+  pull_request:
+    paths: ["windows/**", ".github/workflows/windows.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: windows
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Test
+        run: dotnet test tests/DicomTestTool.Core.Tests -c Release
+      - name: Publish win-x64
+        run: dotnet publish src/DicomTestTool -c Release -f net10.0-windows10.0.19041.0 -r win-x64 --self-contained -p:PublishSingleFile=true -o publish
+      - name: Self-test on Windows (codecs, SCP, echo, store)
+        shell: pwsh
+        run: |
+          $p = Start-Process -FilePath publish/DICOMTestTool.exe -ArgumentList "--selftest","selftest.txt" -PassThru -Wait
+          Get-Content selftest.txt
+          if ($p.ExitCode -ne 0) { throw "Selbsttest fehlgeschlagen (exit $($p.ExitCode))" }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DICOMTestTool-win-x64-portable
+          path: windows/publish/DICOMTestTool.exe
+          retention-days: 14

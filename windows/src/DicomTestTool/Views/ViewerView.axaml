@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:core="using:DicomTestTool.Core"
+             x:Class="DicomTestTool.Views.ViewerView"
+             DragDrop.AllowDrop="True">
+  <DockPanel Margin="20,16">
+    <StackPanel DockPanel.Dock="Top" Spacing="8">
+      <DockPanel>
+        <Button DockPanel.Dock="Right" x:Name="SendButton" Content="Senden …" Click="OnSend" IsEnabled="False" />
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Button Content="Datei öffnen …" Click="OnOpen" />
+          <TextBlock x:Name="FileName" FontWeight="SemiBold" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" MaxWidth="360" />
+          <TextBlock x:Name="FileInfo" Classes="secondary" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" MaxWidth="520" />
+        </StackPanel>
+      </DockPanel>
+      <TextBlock Classes="warning" Text="⚠ Bildanzeige nur zur technischen Kontrolle der übertragenen Daten – nicht für diagnostische Zwecke." />
+      <TextBlock x:Name="ParseWarning" Classes="warning" IsVisible="False" TextWrapping="Wrap" />
+    </StackPanel>
+    <Grid ColumnDefinitions="5*,Auto,6*" Margin="0,8,0,0">
+      <DockPanel Grid.Column="0" MinWidth="300">
+        <StackPanel DockPanel.Dock="Bottom" Spacing="4" Margin="0,6,0,0" x:Name="ImageControls" IsVisible="False">
+          <DockPanel>
+            <Button DockPanel.Dock="Right" x:Name="ExportButton" Content="PNG exportieren …" Click="OnExport" />
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <TextBlock x:Name="WindowText" Classes="mono" FontSize="12" VerticalAlignment="Center" />
+              <Button x:Name="ResetButton" Content="Zurücksetzen" Click="OnResetWindow" />
+              <TextBlock x:Name="SizeText" Classes="caption" VerticalAlignment="Center" />
+            </StackPanel>
+          </DockPanel>
+          <DockPanel x:Name="FramePanel" IsVisible="False">
+            <TextBlock DockPanel.Dock="Left" x:Name="FrameText" Classes="caption" VerticalAlignment="Center" Width="110" />
+            <Slider x:Name="FrameSlider" Minimum="0" TickFrequency="1" IsSnapToTickEnabled="True" />
+          </DockPanel>
+          <TextBlock x:Name="DragHint" Classes="caption" Text="Ziehen mit der Maus: horizontal = Fensterbreite, vertikal = Fensterlage" />
+        </StackPanel>
+        <Border Background="Black" x:Name="ImageArea" ClipToBounds="True" Cursor="SizeAll">
+          <Panel>
+            <Image x:Name="Picture" Stretch="Uniform" RenderOptions.BitmapInterpolationMode="HighQuality" />
+            <TextBlock x:Name="ImageMessage" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Margin="16"
+                       Text="DICOM-Datei hierher ziehen" />
+          </Panel>
+        </Border>
+      </DockPanel>
+      <GridSplitter Grid.Column="1" Width="6" ResizeDirection="Columns" Background="Transparent" />
+      <DockPanel Grid.Column="2" MinWidth="380">
+        <TextBox DockPanel.Dock="Top" x:Name="Filter" Watermark="Filter (Tag, Name oder Wert)" Margin="0,0,0,4" />
+        <DataGrid x:Name="Tags" x:DataType="core:TagRow">
+          <DataGrid.Columns>
+            <DataGridTextColumn Header="Tag" Binding="{Binding Tag}" Width="135" FontFamily="{StaticResource MonoFont}" />
+            <DataGridTextColumn Header="VR" Binding="{Binding VR}" Width="46" FontFamily="{StaticResource MonoFont}" />
+            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="185" />
+            <DataGridTextColumn Header="Länge" Binding="{Binding Length}" Width="58" />
+            <DataGridTextColumn Header="Wert" Binding="{Binding Value}" Width="*" />
+          </DataGrid.Columns>
+        </DataGrid>
+      </DockPanel>
+    </Grid>
+  </DockPanel>
+</UserControl>

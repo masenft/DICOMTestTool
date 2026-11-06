@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:DicomTestTool.ViewModels"
+             x:Class="DicomTestTool.Views.GeneralView"
+             x:DataType="vm:AppState">
+  <StackPanel Margin="24,18" Spacing="18" MaxWidth="980" HorizontalAlignment="Left">
+    <StackPanel>
+      <TextBlock Classes="h1" Text="Allgemein" />
+      <TextBlock Classes="secondary" Text="Startverhalten, Darstellung und Benachrichtigungen" />
+    </StackPanel>
+    <HeaderedContentControl Classes="group" Header="Start">
+      <StackPanel Spacing="8">
+        <CheckBox Content="App bei Windows-Anmeldung starten (im Infobereich)" IsChecked="{Binding LaunchAtLogin}" IsEnabled="{Binding IsWindows}" />
+        <TextBlock Classes="caption" Text="{Binding LaunchAtLoginStatus, StringFormat='Status: {0}'}" />
+        <CheckBox Content="Storage SCP beim Start automatisch starten" IsChecked="{Binding AutoStartScp}" />
+        <CheckBox Content="Watchdog beim Start automatisch starten" IsChecked="{Binding AutoStartWatchdog}" />
+      </StackPanel>
+    </HeaderedContentControl>
+    <HeaderedContentControl Classes="group" Header="Darstellung">
+      <StackPanel Spacing="8">
+        <TextBlock Text="Farbschema" />
+        <RadioButton GroupName="theme" Content="Standard (Windows)" IsChecked="{Binding IsStandardTheme}" />
+        <RadioButton GroupName="theme" Content="Klinik Dunkel (Schwarz/Orange)" IsChecked="{Binding IsClinicalDark}" />
+        <TextBlock Classes="caption" TextWrapping="Wrap"
+                   Text="„Standard“ folgt der Hell-/Dunkel-Einstellung von Windows. „Klinik Dunkel“ ist eine dunkle Oberfläche in Schwarz und Grau mit orangefarbenen Akzenten, wie man es von Befundungs-Workstations kennt. Die Umstellung wirkt sofort." />
+        <Separator Margin="0,4" />
+        <CheckBox Content="Symbol im Infobereich (neben der Uhr) anzeigen" IsChecked="{Binding ShowTrayIcon}" />
+        <CheckBox Content="Beim Schließen des Fensters im Infobereich weiterlaufen" IsChecked="{Binding KeepRunningInTray}" IsEnabled="{Binding ShowTrayIcon}" Margin="22,0,0,0" />
+        <TextBlock Classes="caption" TextWrapping="Wrap"
+                   Text="So bleiben Storage SCP und Watchdog aktiv, auch wenn das Fenster geschlossen ist. Beenden über das Symbol im Infobereich › „Beenden“. Tipp: Unter Windows 11 lässt sich das Symbol in den Taskleisteneinstellungen dauerhaft einblenden." />
+      </StackPanel>
+    </HeaderedContentControl>
+    <HeaderedContentControl Classes="group" Header="Popup-Hinweise (Windows-Benachrichtigungen)">
+      <StackPanel Spacing="8">
+        <CheckBox Content="Benachrichtigungen aktivieren" IsChecked="{Binding NotificationsEnabled}" />
+        <CheckBox Content="Watchdog: Ausfall und Wiederherstellung eines Knotens melden" IsChecked="{Binding NotifyWatchdog}" IsEnabled="{Binding NotificationsEnabled}" Margin="22,0,0,0" />
+        <CheckBox Content="Storage SCP: jedes empfangene Objekt melden" IsChecked="{Binding NotifyScp}" IsEnabled="{Binding NotificationsEnabled}" Margin="22,0,0,0" />
+        <DockPanel>
+          <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="6">
+            <Button Content="Test-Benachrichtigung" Click="OnTest" />
+            <Button Content="Windows-Einstellungen …" Click="OnSettings" />
+          </StackPanel>
+          <TextBlock Classes="caption" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding NotificationPermission, StringFormat='Berechtigung: {0}'}" />
+        </DockPanel>
+        <TextBlock Classes="caption" TextWrapping="Wrap" Text="Erscheint nichts, prüfen Sie, ob „Nicht stören“ bzw. der Fokus-Assistent aktiv ist." />
+      </StackPanel>
+    </HeaderedContentControl>
+  </StackPanel>
+</UserControl>

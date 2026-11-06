@@ -1,0 +1,84 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:DicomTestTool.Controls"
+             xmlns:v="using:DicomTestTool.Views"
+             x:Class="DicomTestTool.Views.FindView">
+  <DockPanel Margin="20,16">
+    <StackPanel DockPanel.Dock="Top" Spacing="12">
+      <StackPanel>
+        <TextBlock Classes="h1" Text="C-FIND / C-MOVE" />
+        <TextBlock Classes="secondary" TextWrapping="Wrap" Text="Suche im PACS und Abruf zu einem Ziel-AE. Platzhalter * und ? sowie Datumsbereiche (01.01.2026 - 31.12.2026) sind erlaubt. Doppelklick öffnet die nächste Ebene." />
+      </StackPanel>
+      <c:NodePicker />
+      <StackPanel Orientation="Horizontal" Spacing="16">
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="Modell" VerticalAlignment="Center" />
+          <ComboBox x:Name="Model" Width="160" SelectedIndex="0">
+            <ComboBoxItem Content="Study Root" />
+            <ComboBoxItem Content="Patient Root" />
+          </ComboBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="Ebene" VerticalAlignment="Center" />
+          <ComboBox x:Name="Level" Width="140" />
+        </StackPanel>
+      </StackPanel>
+      <WrapPanel>
+        <StackPanel Spacing="2" Margin="0,0,10,4">
+          <TextBlock Classes="caption" Text="Patientenname" />
+          <TextBox x:Name="PatName" Width="170" Watermark="MUSTER*" />
+        </StackPanel>
+        <StackPanel Spacing="2" Margin="0,0,10,4">
+          <TextBlock Classes="caption" Text="Patienten-ID" />
+          <TextBox x:Name="PatId" Width="120" />
+        </StackPanel>
+        <c:DateField x:Name="BirthDate" Label="Geburtsdatum" Margin="0,0,10,4" />
+        <c:DateField x:Name="StudyDate" Label="Studiendatum" AllowsRange="True" Margin="0,0,10,4" />
+        <StackPanel x:Name="AccessionBox" Spacing="2" Margin="0,0,10,4">
+          <TextBlock Classes="caption" Text="Accession" />
+          <TextBox x:Name="Accession" Width="110" />
+        </StackPanel>
+        <StackPanel x:Name="ModalityBox" Spacing="2" Margin="0,0,10,4">
+          <TextBlock Classes="caption" Text="Modalität" />
+          <TextBox x:Name="Modality" Width="60" Watermark="CT" />
+        </StackPanel>
+      </WrapPanel>
+      <WrapPanel x:Name="UidRow">
+        <StackPanel Spacing="2" Margin="0,0,10,4">
+          <TextBlock Classes="caption" Text="Study Instance UID (Pflicht)" />
+          <TextBox x:Name="StudyUid" Width="360" />
+        </StackPanel>
+        <StackPanel x:Name="SeriesUidBox" Spacing="2" Margin="0,0,10,4">
+          <TextBlock Classes="caption" Text="Series Instance UID (Pflicht)" />
+          <TextBox x:Name="SeriesUid" Width="360" />
+        </StackPanel>
+      </WrapPanel>
+      <DockPanel>
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="Move-Ziel (AE)" VerticalAlignment="Center" />
+          <TextBox x:Name="MoveDest" Width="140" />
+          <Button x:Name="MoveButton" Content="C-MOVE" Click="OnMove" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <Button x:Name="FindButton" Classes="accent" Content="Suchen" Click="OnFind" HotKey="Ctrl+Enter" ToolTip.Tip="Strg+Eingabe" />
+          <Button x:Name="CancelButton" Content="Abbrechen" Click="OnCancel" IsVisible="False" />
+          <ProgressBar x:Name="Busy" IsIndeterminate="True" Width="70" IsVisible="False" VerticalAlignment="Center" />
+          <Button Content="Felder leeren" Click="OnClearFields" />
+          <TextBlock x:Name="HitCount" Classes="secondary" VerticalAlignment="Center" Text="0 Treffer" />
+        </StackPanel>
+      </DockPanel>
+    </StackPanel>
+    <DataGrid x:Name="Grid" Margin="0,10,0,0" SelectionMode="Extended" x:DataType="v:FindRow">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Patient" Binding="{Binding Name}" Width="2*" />
+        <DataGridTextColumn Header="ID" Binding="{Binding PatientId}" Width="*" />
+        <DataGridTextColumn Header="Geb." Binding="{Binding BirthDate}" Width="95" />
+        <DataGridTextColumn Header="Datum" Binding="{Binding Date}" Width="95" />
+        <DataGridTextColumn Header="Mod." Binding="{Binding Modality}" Width="60" />
+        <DataGridTextColumn Header="Beschreibung" Binding="{Binding Description}" Width="2*" />
+        <DataGridTextColumn Header="Accession" Binding="{Binding Accession}" Width="*" />
+        <DataGridTextColumn Header="Anz." Binding="{Binding Count}" Width="55" />
+      </DataGrid.Columns>
+    </DataGrid>
+  </DockPanel>
+</UserControl>

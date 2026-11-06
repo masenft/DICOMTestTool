@@ -75,6 +75,16 @@ It is written natively in Swift and SwiftUI and has its **own DICOM networking i
 
 **Requirements:** macOS 14 Sonoma or later, Apple Silicon or Intel.
 
+## 🪟 Windows version (preview)
+
+Since version 1.4 there is **DICOM Test Tool for Windows** with the same tools (echo, store, query/retrieve, worklist, storage SCP, watchdog, viewer), a notification-area icon, Windows notifications and automatic updates. The viewer additionally decodes JPEG Lossless, JPEG-LS and RLE. The user interface is in German.
+
+1. Download **`DICOM-Test-Tool-win-Setup.exe`** from [release v1.4.0-beta.1](https://github.com/masenft/DICOMTestTool/releases/tag/v1.4.0-beta.1) and run it – no administrator rights needed.
+2. **On first launch** Windows SmartScreen shows *“Windows protected your PC”* because the installer is not signed: click **More info** › **Run anyway**.
+3. For the storage SCP, Windows Firewall asks on first start – allow **Private networks** (requires administrator rights). The SCP page can also copy a matching `netsh` command.
+
+**Requirements:** Windows 10 (22H2) or Windows 11, 64-bit (x64).
+
 ## Updates
 
 The app checks for new versions once a day. When one is available, a window shows what's new, with an **Install and Restart** button. You can also check manually under *Über › Updates*, or from the menu bar icon. You can choose between **stable** releases and **pre-releases**.
@@ -91,7 +101,7 @@ The app checks for new versions once a day. When one is available, a window show
 - **Intended use:** setting up, testing and troubleshooting DICOM network connections, by IT staff, PACS administrators and biomedical engineers.
 - **Not a medical device, not for diagnostic use** – see the warning above.
 - **No certification:** this software is not certified or validated by NEMA or any other body, and makes no claim of full DICOM conformance. No DICOM Conformance Statement is provided.
-- **Trademarks:** DICOM® is the registered trademark of the National Electrical Manufacturers Association (NEMA) for its standards publications relating to digital communications of medical information. It is used here only descriptively; this project is not affiliated with or endorsed by NEMA. macOS is a trademark of Apple Inc.
+- **Trademarks:** DICOM® is the registered trademark of the National Electrical Manufacturers Association (NEMA) for its standards publications relating to digital communications of medical information. It is used here only descriptively; this project is not affiliated with or endorsed by NEMA. macOS is a trademark of Apple Inc. Windows is a trademark of Microsoft Corporation.
 - **Private project:** a private, non-commercial open-source project, provided under the MIT License **without any warranty**.
 
 ## Known limitations
@@ -127,7 +137,7 @@ On the first build, macOS may ask whether Terminal may control Finder. This is n
 
 1. Bump `VERSION` and add a `## <version>` section to `CHANGELOG.md`.
 2. Run `./release.sh`. It builds the app and creates the DMG, ZIP, `.sha256` and `dist/RELEASE_NOTES.md`.
-3. Create a GitHub release with tag `vX.Y.Z` and attach **`DICOM-Test-Tool.dmg`**, **`DICOM-Test-Tool.zip`** and **`DICOM-Test-Tool.zip.sha256`**. Do not rename these files.
+3. `./release.sh` builds **macOS and Windows** and prints the `gh release create` command with all files. Both platforms always ship in the **same release** with the same version number. Do not rename the files and never add another `.zip` (older Mac versions take the first ZIP with “dicom” in its name).
 
 The app queries `https://api.github.com/repos/<owner>/<repo>/releases/latest`. The default is `AppInfo.defaultRepository`.
 For testing without GitHub, set `DICOMTESTTOOL_UPDATE_API=http://127.0.0.1:8765` to point it at a local mock server.
@@ -161,6 +171,7 @@ The calling AE title is set with the environment variable `DICOM_AET` (default: 
 | `Sources/DicomCore` | DICOM implementation: PDUs, association, DIMSE, data sets, Part 10 files, image rendering |
 | `Sources/DICOMTestTool` | SwiftUI app |
 | `Sources/dicomcli` | Command-line tool |
+| `windows` | Windows version (.NET 10, Avalonia, fo-dicom) – see [windows/README.md](windows/README.md) |
 | `Scripts` | Icon generator, DMG background and DMG builder |
 | `docs` | Project website (GitHub Pages) |
 

@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:DicomTestTool.Controls"
+             xmlns:v="using:DicomTestTool.Views"
+             x:Class="DicomTestTool.Views.WorklistView">
+  <DockPanel Margin="20,16">
+    <StackPanel DockPanel.Dock="Top" Spacing="12">
+      <StackPanel>
+        <TextBlock Classes="h1" Text="Modality Worklist (MWL)" />
+        <TextBlock Classes="secondary" Text="Fragt geplante Untersuchungen vom RIS/Worklist-Server ab, wie es eine Modalität tun würde" />
+      </StackPanel>
+      <c:NodePicker />
+      <WrapPanel>
+        <StackPanel Spacing="2" Margin="0,0,10,4">
+          <TextBlock Classes="caption" Text="Patientenname" />
+          <TextBox x:Name="PatName" Width="160" Watermark="MUSTER*" />
+        </StackPanel>
+        <StackPanel Spacing="2" Margin="0,0,10,4">
+          <TextBlock Classes="caption" Text="Patienten-ID" />
+          <TextBox x:Name="PatId" Width="110" />
+        </StackPanel>
+        <StackPanel Spacing="2" Margin="0,0,10,4">
+          <TextBlock Classes="caption" Text="Accession" />
+          <TextBox x:Name="Accession" Width="110" />
+        </StackPanel>
+        <StackPanel Spacing="2" Margin="0,0,10,4">
+          <TextBlock Classes="caption" Text="Modalität" />
+          <TextBox x:Name="Modality" Width="60" Watermark="CR" />
+        </StackPanel>
+        <StackPanel Spacing="2" Margin="0,0,10,4">
+          <TextBlock Classes="caption" Text="Station AE" />
+          <TextBox x:Name="StationAe" Width="120" />
+        </StackPanel>
+        <c:DateField x:Name="Date" Label="Datum" AllowsRange="True" Margin="0,0,10,4" />
+        <Button Content="Heute" VerticalAlignment="Bottom" Margin="0,0,6,4" Click="OnToday" />
+        <Button Content="Alle" VerticalAlignment="Bottom" Margin="0,0,6,4" Click="OnAll" />
+      </WrapPanel>
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Button x:Name="QueryButton" Classes="accent" Content="Worklist abfragen" Click="OnQuery" HotKey="Ctrl+Enter" ToolTip.Tip="Strg+Eingabe" />
+        <ProgressBar x:Name="Busy" IsIndeterminate="True" Width="70" IsVisible="False" VerticalAlignment="Center" />
+        <TextBlock x:Name="CountText" Classes="secondary" VerticalAlignment="Center" Text="0 Einträge" />
+      </StackPanel>
+    </StackPanel>
+    <DataGrid x:Name="Grid" Margin="0,10,0,0" x:DataType="v:WorklistRow">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Patient" Binding="{Binding Name}" Width="2*" />
+        <DataGridTextColumn Header="ID" Binding="{Binding PatientId}" Width="*" />
+        <DataGridTextColumn Header="Geb." Binding="{Binding BirthDate}" Width="95" />
+        <DataGridTextColumn Header="G." Binding="{Binding Sex}" Width="40" />
+        <DataGridTextColumn Header="Accession" Binding="{Binding Accession}" Width="*" />
+        <DataGridTextColumn Header="Prozedur" Binding="{Binding Procedure}" Width="2*" />
+        <DataGridTextColumn Header="Mod." Binding="{Binding Modality}" Width="55" />
+        <DataGridTextColumn Header="Termin" Binding="{Binding Scheduled}" Width="135" />
+        <DataGridTextColumn Header="Station" Binding="{Binding Station}" Width="*" />
+      </DataGrid.Columns>
+    </DataGrid>
+  </DockPanel>
+</UserControl>

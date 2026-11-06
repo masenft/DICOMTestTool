@@ -1,0 +1,68 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:DicomTestTool.ViewModels"
+             x:Class="DicomTestTool.Views.NodesView"
+             x:DataType="vm:AppState">
+  <DockPanel Margin="20,16" LastChildFill="True">
+    <StackPanel DockPanel.Dock="Top" Spacing="14">
+      <StackPanel>
+        <TextBlock Classes="h1" Text="Knoten &amp; Einstellungen" />
+        <TextBlock Classes="secondary" Text="Entfernte DICOM-Gegenstellen (PACS, Modalitäten, Worklist-Server) und lokale Einstellungen" />
+      </StackPanel>
+      <HeaderedContentControl Classes="group" Header="Lokal">
+        <StackPanel Orientation="Horizontal" Spacing="20">
+          <StackPanel Spacing="2">
+            <TextBlock Classes="caption" Text="Eigener AE-Titel (Calling AE)" />
+            <TextBox Width="200" Text="{Binding CallingAe}" MaxLength="16" />
+          </StackPanel>
+          <StackPanel Spacing="2">
+            <TextBlock Classes="caption" Text="Timeout (Sekunden)" />
+            <NumericUpDown Width="130" Minimum="1" Maximum="600" Increment="1" FormatString="0" Value="{Binding TimeoutSeconds}" />
+          </StackPanel>
+        </StackPanel>
+      </HeaderedContentControl>
+      <DockPanel>
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="6">
+          <Button Content="Hinzufügen" Click="OnAdd" />
+          <Button Content="Duplizieren" Click="OnDuplicate" IsEnabled="{Binding #Grid.SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <Button Content="Löschen" Click="OnDelete" IsEnabled="{Binding #Grid.SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        </StackPanel>
+        <TextBlock Classes="h2" Text="Gegenstellen" VerticalAlignment="Center" />
+      </DockPanel>
+    </StackPanel>
+    <StackPanel DockPanel.Dock="Bottom" Spacing="6" Margin="0,12,0,0" x:Name="EditPanel"
+                IsVisible="{Binding #Grid.SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <HeaderedContentControl Classes="group" Header="Bearbeiten">
+        <StackPanel Orientation="Horizontal" Spacing="14" x:DataType="vm:NodeItem" DataContext="{Binding #Grid.SelectedItem}">
+          <StackPanel Spacing="2">
+            <TextBlock Classes="caption" Text="Name" />
+            <TextBox Width="200" Text="{Binding Name}" />
+          </StackPanel>
+          <StackPanel Spacing="2">
+            <TextBlock Classes="caption" Text="AE-Titel (Called AE)" />
+            <TextBox Width="160" Text="{Binding AeTitle}" />
+          </StackPanel>
+          <StackPanel Spacing="2">
+            <TextBlock Classes="caption" Text="Host / IP" />
+            <TextBox Width="200" Text="{Binding Host}" />
+          </StackPanel>
+          <StackPanel Spacing="2">
+            <TextBlock Classes="caption" Text="Port" />
+            <TextBox Width="90" Text="{Binding Port}" />
+          </StackPanel>
+          <Button Content="Echo testen" VerticalAlignment="Bottom" Click="OnEcho" />
+        </StackPanel>
+      </HeaderedContentControl>
+      <TextBlock Classes="error" Text="AE-Titel dürfen max. 16 Zeichen lang sein." x:DataType="vm:NodeItem" DataContext="{Binding #Grid.SelectedItem}"
+                 IsVisible="{Binding AeTooLong, FallbackValue=False}" />
+    </StackPanel>
+    <DataGrid x:Name="Grid" ItemsSource="{Binding Nodes}" MinHeight="140" Margin="0,10,0,0">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" x:DataType="vm:NodeItem" />
+        <DataGridTextColumn Header="AE-Titel" Binding="{Binding AeTitle}" Width="*" x:DataType="vm:NodeItem" />
+        <DataGridTextColumn Header="Host" Binding="{Binding Host}" Width="*" x:DataType="vm:NodeItem" />
+        <DataGridTextColumn Header="Port" Binding="{Binding Port}" Width="80" x:DataType="vm:NodeItem" />
+      </DataGrid.Columns>
+    </DataGrid>
+  </DockPanel>
+</UserControl>
