@@ -17,6 +17,10 @@
          (decompressing ~130 MB on every start made the portable EXE take 30–60 s). -->
     <PublishReadyToRun Condition="'$(RuntimeIdentifier)' != ''">true</PublishReadyToRun>
     <TieredPGO>true</TieredPGO>
+    <!-- Smaller download: remove unused code from .NET, Avalonia and the Windows SDK projection.
+         "partial" only trims assemblies marked as trimmable; fo-dicom and the app itself stay complete. -->
+    <PublishTrimmed Condition="'$(RuntimeIdentifier)' != ''">true</PublishTrimmed>
+    <TrimMode>partial</TrimMode>
     <NoWarn>$(NoWarn);MVVMTK0045;CA1416</NoWarn>
   </PropertyGroup>
   <ItemGroup>

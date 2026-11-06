@@ -35,9 +35,13 @@ public sealed class AppSettings
         [new DicomNode { Name = "Lokaler SCP", AeTitle = "DICOMTEST", Host = "127.0.0.1", Port = 11112 }];
 }
 
+/// <summary>Source-generated JSON (works in trimmed builds, where reflection-based JSON is disabled).</summary>
+[JsonSourceGenerationOptions(WriteIndented = true)]
+[JsonSerializable(typeof(AppSettings))]
+internal sealed partial class AppSettingsJsonContext : JsonSerializerContext;
+
 public static class SettingsStore
 {
-    private static readonly JsonSerializerOptions Options = new() { WriteIndented = true };
     private static readonly object Gate = new();
 
     public static string FilePath => Path.Combine(AppInfo.DataDirectory, "settings.json");
@@ -47,7 +51,7 @@ public static class SettingsStore
         try
         {
             if (File.Exists(FilePath))
-                return JsonSerializer.Deserialize<AppSettings>(File.ReadAllText(FilePath), Options) ?? new AppSettings();
+                return JsonSerializer.Deserialize(File.ReadAllText(FilePath), AppSettingsJsonContext.Default.AppSettings) ?? new AppSettings();
         }
         catch (Exception)
         {
@@ -62,7 +66,7 @@ public static class SettingsStore
         lock (Gate)
         {
             var tmp = FilePath + ".tmp";
-            File.WriteAllText(tmp, JsonSerializer.Serialize(settings, Options));
+            File.WriteAllText(tmp, JsonSerializer.Serialize(settings, AppSettingsJsonContext.Default.AppSettings));
             File.Move(tmp, FilePath, overwrite: true);
         }
     }

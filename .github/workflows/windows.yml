@@ -28,19 +28,31 @@ jobs:
         run: |
           dotnet publish src/DicomTestTool -c Release -f net10.0-windows10.0.19041.0 -r win-x64 --self-contained -p:PublishSingleFile=false -o installed
           dotnet publish src/DicomTestTool -c Release -f net10.0-windows10.0.19041.0 -r win-x64 --self-contained -p:PublishSingleFile=true -o publish
+          dotnet publish src/DicomTestTool -c Release -f net10.0-windows10.0.19041.0 -r win-x64 --self-contained -p:PublishSingleFile=true -p:PublishTrimmed=false -o untrimmed
+          "Größen: installiert $([math]::Round((Get-ChildItem installed -Recurse | Measure-Object Length -Sum).Sum/1MB)) MB, portabel $([math]::Round((Get-Item publish/DICOMTestTool.exe).Length/1MB)) MB" | Tee-Object -Append $env:GITHUB_STEP_SUMMARY
       - name: Self-test on Windows (codecs, SCP, echo, store)
         shell: pwsh
         run: |
           $p = Start-Process -FilePath publish/DICOMTestTool.exe -ArgumentList "--selftest","selftest.txt" -PassThru -Wait
           Get-Content selftest.txt
           if ($p.ExitCode -ne 0) { throw "Selbsttest fehlgeschlagen (exit $($p.ExitCode))" }
+      - name: UI test on Windows (all pages, dialogs, settings, SCP, notification)
+        shell: pwsh
+        run: |
+          foreach ($v in @("installed", "publish", "untrimmed")) {
+            $env:DICOMTESTTOOL_DATA_DIR = Join-Path $env:RUNNER_TEMP "ui-$v"
+            $p = Start-Process -FilePath "$v/DICOMTestTool.exe" -ArgumentList "--uitest","uitest-$v.txt" -PassThru
+            if (-not $p.WaitForExit(180000)) { $p.Kill(); throw "UI-Test ($v) hängt" }
+            "== $v (exit $($p.ExitCode))"; Get-Content "uitest-$v.txt"
+            if ($p.ExitCode -ne 0) { throw "UI-Test ($v) fehlgeschlagen" }
+          }
       - name: Performance (start time, idle CPU)
         shell: pwsh
         run: |
           "| Variante | Start bis Fenster | CPU im Leerlauf | Arbeitsspeicher |" | Add-Content $env:GITHUB_STEP_SUMMARY
           "|---|---|---|---|" | Add-Content $env:GITHUB_STEP_SUMMARY
-          gh release download v1.4.0 --repo $env:GITHUB_REPOSITORY --pattern DICOM-Test-Tool-win-portable.exe --dir baseline
-          ./build/measure-perf.ps1 -Exe baseline/DICOM-Test-Tool-win-portable.exe -Label "1.4.0 portabel (vorher)"
+          gh release download v1.4.1 --repo $env:GITHUB_REPOSITORY --pattern DICOM-Test-Tool-win-portable.exe --dir baseline
+          ./build/measure-perf.ps1 -Exe baseline/DICOM-Test-Tool-win-portable.exe -Label "1.4.1 portabel (vorher)"
           ./build/measure-perf.ps1 -Exe publish/DICOMTestTool.exe -Label "neu, portabel"
           ./build/measure-perf.ps1 -Exe installed/DICOMTestTool.exe -Label "neu, installiert (Ordner)"
         env:

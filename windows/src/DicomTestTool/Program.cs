@@ -32,6 +32,15 @@ internal static class Program
             return;
         }
 
+        var ui = Array.IndexOf(args, "--uitest");
+        if (ui >= 0)
+        {
+            UiTest.Enabled = true;
+            UiTest.LogPath = ui + 1 < args.Length ? args[ui + 1] : null;
+            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args, Avalonia.Controls.ShutdownMode.OnExplicitShutdown);
+            return;
+        }
+
         if (!SingleInstance.TryAcquire())
         {
             SingleInstance.SignalFirstInstance();
