@@ -75,11 +75,11 @@ It is written natively in Swift and SwiftUI and has its **own DICOM networking i
 
 **Requirements:** macOS 14 Sonoma or later, Apple Silicon or Intel.
 
-## 🪟 Windows version (preview)
+## 🪟 Windows version
 
 Since version 1.4 there is **DICOM Test Tool for Windows** with the same tools (echo, store, query/retrieve, worklist, storage SCP, watchdog, viewer), a notification-area icon, Windows notifications and automatic updates. The viewer additionally decodes JPEG Lossless, JPEG-LS and RLE. The user interface is in German.
 
-1. Download **`DICOM-Test-Tool-win-Setup.exe`** from [release v1.4.0-beta.1](https://github.com/masenft/DICOMTestTool/releases/tag/v1.4.0-beta.1) and run it – no administrator rights needed.
+1. Download **`DICOM-Test-Tool-win-Setup.exe`** from [**Releases**](../../releases/latest) and run it – no administrator rights needed.
 2. **On first launch** Windows SmartScreen shows *“Windows protected your PC”* because the installer is not signed: click **More info** › **Run anyway**.
 3. For the storage SCP, Windows Firewall asks on first start – allow **Private networks** (requires administrator rights). The SCP page can also copy a matching `netsh` command.
 

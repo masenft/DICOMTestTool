@@ -1,6 +1,6 @@
 # Umsetzungsplan: DICOM Test Tool für Windows
 
-Stand: 06.11.2026 · Status: **umgesetzt** als Vorabversion 1.4.0-beta.1 (Code in `windows/`, Entwicklerhinweise in [windows/README.md](windows/README.md))
+Stand: 06.11.2026 · Status: **umgesetzt** in Version 1.4.0 (zuvor Vorabversion 1.4.0-beta.1) (Code in `windows/`, Entwicklerhinweise in [windows/README.md](windows/README.md))
 
 > Abweichungen vom Entwurf: Avalonia **11.3** statt 12 (ausgereifte, gut dokumentierte Version); Plattformteile (Toasts, Autostart) liegen direkt im App-Projekt statt in einem eigenen `Platform`-Projekt. Zusätzlich gibt es einen Selbsttest (`DICOMTestTool.exe --selftest`), der in GitHub Actions unter Windows läuft. Velopack baut das Setup direkt auf dem Mac (in Phase 0 bestätigt).
 

@@ -78,11 +78,11 @@ Die Datei `DICOM-Test-Tool.zip` im Release wird von der eingebauten Update-Funkt
 
 **Systemvoraussetzungen:** macOS 14 (Sonoma) oder neuer, Apple Silicon oder Intel.
 
-## 🪟 Windows-Version (Vorabversion)
+## 🪟 Windows-Version
 
 Seit Version 1.4 gibt es das **DICOM Test Tool für Windows** mit denselben Werkzeugen (Echo, Store, Query/Retrieve, Worklist, Storage SCP, Watchdog, Viewer), Symbol im Infobereich, Windows-Benachrichtigungen und automatischen Updates. Der Viewer dekodiert zusätzlich JPEG Lossless, JPEG-LS und RLE.
 
-1. Im [Release v1.4.0-beta.1](https://github.com/masenft/DICOMTestTool/releases/tag/v1.4.0-beta.1) die Datei **`DICOM-Test-Tool-win-Setup.exe`** herunterladen und starten – ohne Administratorrechte.
+1. Unter [**Releases**](../../releases/latest) die Datei **`DICOM-Test-Tool-win-Setup.exe`** herunterladen und starten – ohne Administratorrechte.
 2. **Beim ersten Start** meldet Windows SmartScreen *„Der Computer wurde durch Windows geschützt“*, weil das Setup nicht signiert ist: auf **Weitere Informationen** › **Trotzdem ausführen** klicken.
 3. Die App erscheint im Startmenü als **DICOM Test Tool für Windows**. Für den Storage SCP fragt die Windows-Firewall beim ersten Start nach – **Private Netzwerke** erlauben (Administratorrechte nötig). Alternativ kopiert die SCP-Seite einen passenden `netsh`-Befehl.
 

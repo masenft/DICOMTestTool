@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.4.0-beta.1
+## 1.4.0
 
-Vorabversion: erste Version für **Windows**.
+Erste Version für **Windows**.
 
 ### Windows (neu)
 - **DICOM Test Tool für Windows** – dieselben Werkzeuge wie auf dem Mac: Knoten, Echo, Store (mit Testbildern), Query/Retrieve (C-FIND/C-MOVE), Worklist, Storage SCP, Watchdog und Viewer/Tag-Dump
