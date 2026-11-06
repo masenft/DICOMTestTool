@@ -20,6 +20,10 @@
     <NoWarn>$(NoWarn);MVVMTK0045;CA1416</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <!-- The Windows SDK projection is huge and only used for toasts: precompiling it would add ~30 MB. -->
+    <PublishReadyToRunExclude Include="Microsoft.Windows.SDK.NET.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
