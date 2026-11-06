@@ -83,6 +83,8 @@ Since version 1.4 there is **DICOM Test Tool for Windows** with the same tools (
 2. **On first launch** Windows SmartScreen shows *“Windows protected your PC”* because the installer is not signed: click **More info** › **Run anyway**.
 3. For the storage SCP, Windows Firewall asks on first start – allow **Private networks** (requires administrator rights). The SCP page can also copy a matching `netsh` command.
 
+**Without installation (portable):** download `DICOM-Test-Tool-win-portable.exe` and run it directly, e.g. from a USB stick. Limitations: no automatic updates; settings and logs are still stored under `%APPDATA%` / `%LOCALAPPDATA%\DICOM Test Tool`; “start at sign-in” remembers the current path of the EXE.
+
 **Requirements:** Windows 10 (22H2) or Windows 11, 64-bit (x64).
 
 ## Updates

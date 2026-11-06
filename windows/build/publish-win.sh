@@ -33,10 +33,11 @@ cp "$WORK/releases/DICOMTestTool-win-Setup.exe" "$OUT/DICOM-Test-Tool-win-Setup.
 cp "$WORK/releases/"*.nupkg "$WORK/releases/releases.win.json" "$OUT/"
 [[ -f "$WORK/releases/assets.win.json" ]] && cp "$WORK/releases/assets.win.json" "$OUT/"
 [[ -f "$WORK/releases/RELEASES" ]] && cp "$WORK/releases/RELEASES" "$OUT/"
-# Portable exe for quick tests on the PC (not part of a GitHub release).
-cp "$WORK/publish/DICOMTestTool.exe" "$OUT/DICOMTestTool-portable.exe"
+# Portable exe: runs without installation (no automatic updates). Part of the release – an .exe, not a .zip.
+cp "$WORK/publish/DICOMTestTool.exe" "$OUT/DICOM-Test-Tool-win-portable.exe"
 cp "$WORK/notes.md" "$OUT/RELEASE_NOTES.md"
-(cd "$OUT" && shasum -a 256 DICOM-Test-Tool-win-Setup.exe > DICOM-Test-Tool-win-Setup.exe.sha256)
+(cd "$OUT" && shasum -a 256 DICOM-Test-Tool-win-Setup.exe > DICOM-Test-Tool-win-Setup.exe.sha256 \
+  && shasum -a 256 DICOM-Test-Tool-win-portable.exe > DICOM-Test-Tool-win-portable.exe.sha256)
 
 echo
 echo "Fertig: Windows-Version $VERSION in $(cd "$OUT" && pwd)"

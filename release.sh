@@ -16,7 +16,7 @@ fi
 windows/build/publish-win.sh
 
 MAC=(dist/DICOM-Test-Tool.dmg dist/DICOM-Test-Tool.zip dist/DICOM-Test-Tool.zip.sha256 dist/dicomcli)
-WIN=(dist-win/DICOM-Test-Tool-win-Setup.exe dist-win/DICOM-Test-Tool-win-Setup.exe.sha256 dist-win/DICOMTestTool-$VERSION-full.nupkg dist-win/releases.win.json dist-win/assets.win.json dist-win/RELEASES)
+WIN=(dist-win/DICOM-Test-Tool-win-Setup.exe dist-win/DICOM-Test-Tool-win-Setup.exe.sha256 dist-win/DICOM-Test-Tool-win-portable.exe dist-win/DICOM-Test-Tool-win-portable.exe.sha256 dist-win/DICOMTestTool-$VERSION-full.nupkg dist-win/releases.win.json dist-win/assets.win.json dist-win/RELEASES)
 PRE=""; [[ "$VERSION" == *-* ]] && PRE="--prerelease"
 
 echo

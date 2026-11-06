@@ -36,7 +36,7 @@ Build-Ausgaben landen außerhalb von iCloud Drive in `$TMPDIR` (siehe `Directory
 
 ## Auf dem Windows-PC testen
 
-- **Schnell:** `dist-win/DICOMTestTool-portable.exe` auf den PC kopieren (z. B. über eine SMB-Freigabe des Macs) und direkt starten.
+- **Schnell:** `dist-win/DICOM-Test-Tool-win-portable.exe` auf den PC kopieren (z. B. über eine SMB-Freigabe des Macs) und direkt starten.
 - **Installer und Updates:** `dist-win/DICOM-Test-Tool-win-Setup.exe` ausführen. Updates gibt es nur in der installierten Version.
 - **Selbsttest:** `DICOMTestTool.exe --selftest ergebnis.txt` prüft Codecs, Storage SCP, Echo und Store gegen sich selbst.
 - **CI:** Jeder Push auf `windows`/`main` baut und testet in GitHub Actions unter Windows (`.github/workflows/windows.yml`); dort lässt sich die portable EXE als Artefakt herunterladen.
@@ -45,6 +45,6 @@ Daten der App: Einstellungen in `%APPDATA%\DICOM Test Tool\settings.json`, Proto
 
 ## Release
 
-Gemeinsam mit der Mac-Version über `../release.sh` (gleiche Versionsnummer aus `../VERSION`, Release Notes aus `../CHANGELOG.md`). Ins Release kommen nur `DICOM-Test-Tool-win-Setup.exe` (+ `.sha256`), `DICOMTestTool-<Version>-full.nupkg`, `releases.win.json`, `assets.win.json` und `RELEASES` – **keine ZIP-Datei**, damit ältere Mac-Versionen beim Update nicht die falsche Datei nehmen.
+Gemeinsam mit der Mac-Version über `../release.sh` (gleiche Versionsnummer aus `../VERSION`, Release Notes aus `../CHANGELOG.md`). Ins Release kommen nur `DICOM-Test-Tool-win-Setup.exe` und `DICOM-Test-Tool-win-portable.exe` (jeweils + `.sha256`), `DICOMTestTool-<Version>-full.nupkg`, `releases.win.json`, `assets.win.json` und `RELEASES` – **keine ZIP-Datei**, damit ältere Mac-Versionen beim Update nicht die falsche Datei nehmen.
 
 Das Setup ist noch nicht signiert (SmartScreen-Hinweis beim ersten Start). Für eine Signatur ist `vpk pack --signTemplate` vorgesehen, siehe WINDOWS-PLAN.md, Abschnitt 8.

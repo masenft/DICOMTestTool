@@ -86,6 +86,8 @@ Seit Version 1.4 gibt es das **DICOM Test Tool für Windows** mit denselben Werk
 2. **Beim ersten Start** meldet Windows SmartScreen *„Der Computer wurde durch Windows geschützt“*, weil das Setup nicht signiert ist: auf **Weitere Informationen** › **Trotzdem ausführen** klicken.
 3. Die App erscheint im Startmenü als **DICOM Test Tool für Windows**. Für den Storage SCP fragt die Windows-Firewall beim ersten Start nach – **Private Netzwerke** erlauben (Administratorrechte nötig). Alternativ kopiert die SCP-Seite einen passenden `netsh`-Befehl.
 
+**Ohne Installation (portabel):** `DICOM-Test-Tool-win-portable.exe` herunterladen und direkt starten, z. B. vom USB-Stick. Einschränkungen: keine automatischen Updates; Einstellungen und Protokolle landen trotzdem unter `%APPDATA%` bzw. `%LOCALAPPDATA%\DICOM Test Tool`; „Start bei Anmeldung“ merkt sich den aktuellen Pfad der EXE.
+
 Die übrigen Dateien im Release (`.nupkg`, `releases.win.json`) braucht die Update-Funktion. Deinstallation über *Einstellungen › Apps*.
 
 **Systemvoraussetzungen:** Windows 10 (22H2) oder Windows 11, 64 Bit (x64).
